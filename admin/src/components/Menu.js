@@ -19,6 +19,7 @@ import person from "../assets/img/person.svg";
 import logoutIcon from "../assets/img/logout.svg";
 import postavke from "../assets/img/postavke.svg";
 import { useAuth } from "../contexts/AuthContext";
+import { Link } from "react-router-dom";
 
 function MenuComponent() {
   const { logout, currentUser } = useAuth();
@@ -32,41 +33,52 @@ function MenuComponent() {
             <span style={{ fontSize: "1rem" }}>
               E-BIBLIOTEKA
               <br /> &nbsp;&nbsp;&nbsp;&nbsp;CLOUD
+              <Link to="/" />
             </span>
           </MenuItem>
         </SidebarHeader>
         <SidebarContent className="mt-5 ">
           <MenuItem
             icon={
-              <img style={{ color: "#fff" }} src={homeIcon} alt="home icon" />
+              <img
+                style={{ color: "#fff" }}
+                src={homeIcon}
+                alt="home icon"
+                className="active"
+              />
             }
           >
             HOME
+            <Link to="/" />
           </MenuItem>
-          <MenuItem icon={<img src={usersIcon} alt="home icon" />}>
+          <MenuItem icon={<img src={usersIcon} alt="people icon" />}>
             Korisnici
+            <Link to="/korisnici" />
           </MenuItem>
-          <MenuItem icon={<img src={bookIcon} alt="home icon" />}>
+          <MenuItem icon={<img src={bookIcon} alt="book icon" />}>
             Knjige
+            <Link to="/knjige" />
           </MenuItem>
-          <MenuItem icon={<img src={inventoryIcon} alt="home icon" />}>
+          <MenuItem icon={<img src={inventoryIcon} alt="cart icon" />}>
             Nabavke
+            <Link to="/nabavke" />
           </MenuItem>
-          <MenuItem icon={<img src={kategorijaIcon} alt="home icon" />}>
+          <MenuItem icon={<img src={kategorijaIcon} alt="category icon" />}>
             Žanrovi
+            <Link to="/zanrovi" />
           </MenuItem>
-          <MenuItem icon={<img src={person} alt="home icon" />}>
+          <MenuItem icon={<img src={person} alt="person icon" />}>
             Autori
+            <Link to="/autori" />
           </MenuItem>
-          <MenuItem icon={<img src={person} alt="home icon" />}>
+          <MenuItem icon={<img src={person} alt="person icon" />}>
             Izdavači
+            <Link to="/izdavaci" />
           </MenuItem>
           {currentUser && currentUser.uloga.naziv === "Admin" && (
-            <MenuItem
-              onClick={logout}
-              icon={<img src={person} alt="home icon" />}
-            >
+            <MenuItem icon={<img src={person} alt="person icon" />}>
               Zaposlenici
+              <Link to="/zaposlenici" />
             </MenuItem>
           )}
         </SidebarContent>
@@ -76,6 +88,7 @@ function MenuComponent() {
             className="mt-4"
           >
             Postavke
+            <Link to="/postavke" />
           </MenuItem>
           <MenuItem
             onClick={logout}

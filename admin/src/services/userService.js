@@ -7,7 +7,14 @@ const updateUserURL = `${usersURL}/update`;
 
 export async function getUsers(sort, q, index, size) {
   const res = await axios.get(
-    `${usersURL}??sort=${sort}&q=${q}&page_index=${index}&page_size=${size}`
+    `${usersURL}?sort=${sort}&q=${q}&page_index=${index}&page_size=${size}`
+  );
+  return res.data;
+}
+
+export async function getNewUsers(sort, q, index, size) {
+  const res = await axios.get(
+    `${usersURL}/new-users?sort=${sort}&q=${q}&page_index=${index}&page_size=${size}`
   );
   return res.data;
 }
@@ -22,7 +29,7 @@ export async function addUser(user) {
 }
 export async function updateUser(id, user) {
   axios({
-    method: "post",
+    method: "put",
     url: `${updateUserURL}/${id}`,
     data: user,
     headers: "application/json",

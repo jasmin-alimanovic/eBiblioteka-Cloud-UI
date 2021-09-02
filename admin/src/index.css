@@ -12,8 +12,31 @@
 }
 
 #main {
-  background-image: url("./assets/img/bg.jpg");
+  background-image: url("./assets/img/logo.svg");
   background-repeat: no-repeat;
   background-position: center;
-  background-size: contain;
+  /* background-size: contain; */
+}
+.container {
+  min-width: 100vw !important;
+}
+.card-highlight {
+  border-radius: 0.5rem !important;
+}
+.clr-grey-light {
+  color: #9fa2b4;
+}
+.card-highlight:hover {
+  cursor: pointer;
+  border: 1px solid #3751ff !important;
+  color: #3751ff !important;
+}
+.card-highlight:hover .clr-grey-light {
+  color: #3751ff !important;
+}
+#main > section {
+  margin-bottom: 1rem !important;
+}
+th.p-2 {
+  color: #9fa2b4 !important;
 }
