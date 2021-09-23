@@ -24,14 +24,30 @@ function App() {
             <Route path="/signup" exact component={Signup} />
             <Route path="/403" exact component={Error403} />
             <Route path="/" exact component={Login} />
-            <PrivateRoute path="/dashboard" exact component={Dashboard} />
-            <PrivateRoute path="/admin/knjige" component={Books} />
-            <PrivateRoute path="/admin/korisnici" component={Users} />
-            <PrivateRoute path="/admin/zaposlenici" component={Zaposlenici} />
-            <PrivateRoute path="/admin/zaduzbe" component={Zaduzbe} />
-            <PrivateRoute path="/admin/autori" component={Autori} />
-            <PrivateRoute path="/admin/izdavaci" component={Izdavaci} />
-            <PrivateRoute path="/admin/zanrovi" component={Zanrovi} />
+            <PrivateRoute path="/dashboard" exact>
+              <Dashboard />
+            </PrivateRoute>
+            <PrivateRoute path="/admin/knjige">
+              <Books />
+            </PrivateRoute>
+            <PrivateRoute path="/admin/korisnici">
+              <Users />
+            </PrivateRoute>
+            <PrivateRoute path="/admin/zaposlenici">
+              <Zaposlenici />
+            </PrivateRoute>
+            <PrivateRoute path="/admin/zaduzbe">
+              <Zaduzbe />
+            </PrivateRoute>
+            <PrivateRoute path="/admin/autori">
+              <Autori />
+            </PrivateRoute>
+            <PrivateRoute path="/admin/izdavaci">
+              <Izdavaci />
+            </PrivateRoute>
+            <PrivateRoute path="/admin/zanrovi">
+              <Zanrovi />
+            </PrivateRoute>
           </Switch>
         </AuthProvider>
       </Router>
