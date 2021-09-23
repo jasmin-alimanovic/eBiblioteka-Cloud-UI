@@ -1,6 +1,8 @@
 import React, { useContext, useState, useEffect } from "react";
 import { auth } from "../firebaseClient";
 import { getZaposlenikByFID } from "../services/zaposlenikService";
+import { getUserByFID } from "../services/userService";
+import userEvent from "@testing-library/user-event";
 
 const AuthContext = React.createContext();
 
@@ -38,7 +40,12 @@ export default function AuthProvider({ children }) {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user) {
         getZaposlenikByFID(user.uid).then((data) => {
-          setCurrentUser({ ...user, ...data });
+          if (data) setCurrentUser({ ...user, ...data });
+          else {
+            getUserByFID(user.uid).then((u) => {
+              setCurrentUser({ ...userEvent, ...u });
+            });
+          }
           setLoading(false);
         });
       } else {

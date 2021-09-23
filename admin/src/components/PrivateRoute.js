@@ -4,15 +4,20 @@ import { useAuth } from "../contexts/AuthContext";
 
 export default function PrivateRoute({ component: Component, ...rest }) {
   const { currentUser } = useAuth();
+  const uloge = ["Bibliotekar", "Admin"];
 
   return (
     <Route
       {...rest}
       render={(props) => {
         return currentUser ? (
-          <Component {...props} />
+          uloge.includes(currentUser?.uloga.naziv) ? (
+            <Component {...props} />
+          ) : (
+            <Redirect to="/403" />
+          )
         ) : (
-          <Redirect to="/login" />
+          <Redirect to="/admin/login" />
         );
       }}
     ></Route>

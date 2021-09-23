@@ -6,9 +6,14 @@ const addZaposlenikURL = `${zaposleniciURL}/add-zaposlenik`;
 const updateZaposlenikURL = `${zaposleniciURL}/update`;
 
 export async function getZaposlenike(sort, q, index, size) {
-  const res = await axios.get(
-    `${zaposleniciURL}??sort=${sort}&q=${q}&page_index=${index}&page_size=${size}`
-  );
+  const res = await axios.get(zaposleniciURL, {
+    params: {
+      sort: sort,
+      q: q,
+      page_index: index,
+      page_size: size,
+    },
+  });
   return res.data;
 }
 
@@ -18,7 +23,7 @@ export async function getZaposlenikByFID(fid) {
 }
 
 export async function addZaposlenik(user) {
-  axios({
+  return axios({
     method: "post",
     url: addZaposlenikURL,
     headers: { "Content-Type": "application/json" },
@@ -26,10 +31,11 @@ export async function addZaposlenik(user) {
   });
 }
 export async function updateZaposlenik(id, user) {
-  axios({
-    method: "post",
+  console.log(id, user);
+  return axios({
+    method: "put",
     url: `${updateZaposlenikURL}/${id}`,
     data: user,
-    headers: "application/json",
+    headers: { "Content-Type": "application/json" },
   });
 }

@@ -10,10 +10,214 @@
 .pro-icon-wrapper {
   background-color: transparent !important;
 }
-
+.pro-sidebar-content {
+  background-color: rgba(41, 55, 88, 0.7) !important;
+  max-height: 53vh;
+  overflow-y: scroll;
+}
+.chart,
+.card {
+  box-shadow: 0 1px 2px 0 rgb(60 64 67 / 30%), 0 1px 3px 1px rgb(60 64 67 / 15%);
+}
+html {
+  width: 100%;
+  min-height: 100%;
+  background-color: #f6f7f9;
+  overflow: scroll;
+}
+body {
+  min-height: 100%;
+  width: 100%;
+  background-color: #f6f7f9;
+}
 #main {
-  background-image: url("./assets/img/bg.jpg");
+  /* background-image: url("./assets/img/logo.svg"); */
   background-repeat: no-repeat;
   background-position: center;
-  background-size: contain;
+  /* width: 85vw !important; */
+  /* margin-right: 5rem; */
+  /* width: 70vw !important; */
+
+  /* background-size: contain; */
+}
+
+tr:first-child {
+  margin-left: 1rem !important;
+}
+.push {
+  min-width: 200px;
+  height: 100vh !important;
+}
+.container {
+  min-width: 100vw !important;
+}
+.card-highlight {
+  border-radius: 0.5rem !important;
+}
+.clr-grey-light {
+  color: #9fa2b4;
+}
+.card-highlight:hover {
+  cursor: pointer;
+  border: 1px solid #3751ff !important;
+  color: #3751ff !important;
+}
+.card-highlight:hover .clr-grey-light {
+  color: #3751ff !important;
+}
+.search-input {
+  background-color: transparent !important;
+  border: 0 !important;
+  outline: none !important;
+  text-overflow: ellipsis !important;
+  background-color: rgba(71, 98, 130, 0.08) !important;
+}
+.search-input:focus {
+  background-color: #fff !important;
+  outline: #1a2257 !important;
+  /* outline: none !important; */
+  outline-offset: 0px !important;
+  border: 2px solid #5b6feb !important;
+}
+th {
+  color: #9fa2b4 !important;
+}
+#books {
+  max-width: 850px;
+  background-color: #fff;
+  border-radius: 15px !important;
+  box-shadow: 0 1px 2px 0 rgb(60 64 67 / 30%), 0 1px 3px 1px rgb(60 64 67 / 15%);
+  padding-left: 1rem !important;
+  padding-right: 1rem !important;
+}
+/* table {
+  background-color: #fff;
+  border-radius: 15px !important;
+  box-shadow: 0 1px 2px 0 rgb(60 64 67 / 30%), 0 1px 3px 1px rgb(60 64 67 / 15%);
+} */
+
+.book-row {
+  border-bottom: 1px solid #dcdcdc;
+  /* max-height: 100px !important; */
+}
+table.book-table {
+  table-layout: fixed !important;
+  width: 850px;
+}
+table.book-table td {
+  overflow: hidden;
+}
+
+th,
+td {
+  text-align: left !important;
+  white-space: nowrap;
+
+  /* border: 1px solid black !important; */
+  /* padding: 5px !important; */
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+tfoot td {
+  overflow: visible;
+}
+@media only screen and (max-width: 1200px) {
+  .book-table td:nth-of-type(4) {
+    display: none;
+  }
+  .book-table th:nth-of-type(4) {
+    display: none;
+  }
+  .book-table {
+    width: 700px !important;
+  }
+}
+@media only screen and (max-width: 950px) {
+  .book-table td:nth-of-type(4) {
+    display: none;
+  }
+  .book-table th:nth-of-type(4) {
+    display: none;
+  }
+  .book-table td:nth-of-type(5) {
+    display: none;
+  }
+  .book-table th:nth-of-type(5) {
+    display: none;
+  }
+  .book-table {
+    width: 550px !important;
+  }
+  .push {
+    min-width: 80px !important;
+  }
+}
+@media only screen and (max-width: 838px) {
+  .book-table td {
+    display: none;
+  }
+  .book-table th {
+    display: none;
+  }
+  .book-table td:nth-of-type(1) {
+    display: table-cell;
+  }
+  .book-table th:nth-of-type(1) {
+    display: table-cell;
+  }
+  .book-table td:nth-of-type(3) {
+    display: table-cell;
+  }
+  .book-table th:nth-of-type(3) {
+    display: table-cell;
+  }
+  .book-table td:nth-of-type(7) {
+    display: table-cell;
+  }
+  .book-table th:nth-of-type(7) {
+    display: table-cell;
+  }
+  .book-table {
+    width: 100% !important;
+  }
+  .push {
+    min-width: 80px !important;
+  }
+  .dashboard-cards {
+    flex-direction: column !important;
+    margin-bottom: 2rem;
+    padding-bottom: 2rem;
+  }
+  .dashboard-card {
+    width: 500px !important;
+    margin-top: 2rem !important;
+  }
+  .dashboard-card > * {
+    margin-right: 0px !important;
+  }
+}
+
+/* 
+**
+** SCROLL BAR
+**/
+
+/* width */
+.pro-sidebar-content::-webkit-scrollbar {
+  width: 0.5vw;
+}
+
+/* Track */
+.pro-sidebar-content::-webkit-scrollbar-track {
+  background: #30334e;
+}
+
+/* Handle */
+.pro-sidebar-content::-webkit-scrollbar-thumb {
+  background: rgba(165, 171, 230, 0.8);
+}
+
+/* Handle on hover */
+.pro-sidebar-content::-webkit-scrollbar-thumb:hover {
+  background: rgba(165, 171, 230);
 }
