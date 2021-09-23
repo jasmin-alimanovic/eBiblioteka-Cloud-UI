@@ -50,6 +50,10 @@ export async function getUserByFID(fid) {
   const user = await axios.get(`${usersURL}/fid/${fid}`);
   return user?.data;
 }
+export async function getUserByEmail(email) {
+  const user = await axios.get(`${usersURL}/email/${email}`);
+  return user?.data;
+}
 export async function getUserById(id) {
   const user = await axios.get(`${usersURL}/${id}`);
   return user?.data;

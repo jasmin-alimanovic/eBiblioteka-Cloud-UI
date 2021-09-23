@@ -6,8 +6,6 @@ import searchIcon from "../assets/img/search.svg";
 import addIcon from "../assets/img/add.svg";
 import MenuComponent from "./Menu";
 import { useAuth } from "../contexts/AuthContext";
-import leftArrow from "../assets/img/left-arrow.svg";
-import rightArrow from "../assets/img/right-arrow.svg";
 import moreIcon from "../assets/img/more.svg";
 import { getkategorijas } from "../services/kategorijaService";
 import AddZanrModal from "./modals/AddZanrModal";
@@ -19,8 +17,6 @@ export default function Zanrovi() {
   const [modalAddShow, setModalAddShow] = useState(false);
   const [modalEditShow, setModalEditShow] = useState(false);
   const [users, setUsers] = useState(null);
-  const [pageSize, setPageSize] = useState(5);
-  const [page, setPage] = useState(1);
   const [query, setQuery] = useState("");
   const [addedUser, setAddedUser] = useState(null);
   const [userForEdit, setUserForEdit] = useState(null);
@@ -208,94 +204,6 @@ export default function Zanrovi() {
                 )}
               </tbody>
             </table>
-            <section
-              style={{
-                borderTop: "1px solid #0004",
-                borderBottom: "1px solid #0004",
-                padding: "1rem",
-                width: "100%",
-              }}
-              className="d-flex justify-content-end"
-            >
-              <div
-                style={{
-                  fontSize: "14px",
-                  color: "#9FA2B4",
-                  display: "flex",
-                  alignItems: "center",
-                }}
-                className="me-5"
-              >
-                <Dropdown>
-                  <Dropdown.Toggle
-                    as={CustomToggle}
-                    id="dropdown-custom-components"
-                  >
-                    Rows per page &nbsp;
-                    <span style={{ color: "black", fontSize: "16px" }}>
-                      {pageSize}
-                    </span>
-                  </Dropdown.Toggle>
-
-                  <Dropdown.Menu>
-                    <Dropdown.Item
-                      onClick={() => {
-                        setPageSize(5);
-                      }}
-                      eventKey="1"
-                    >
-                      5
-                    </Dropdown.Item>
-                    <Dropdown.Item
-                      onClick={() => {
-                        setPageSize(10);
-                      }}
-                      eventKey="2"
-                    >
-                      10
-                    </Dropdown.Item>
-                    <Dropdown.Item
-                      onClick={() => {
-                        setPageSize(15);
-                      }}
-                      eventKey="3"
-                    >
-                      15
-                    </Dropdown.Item>
-                  </Dropdown.Menu>
-                </Dropdown>
-              </div>
-              <div className="p-0 d-flex align-items-center">
-                <span className="me-3">
-                  {pageSize * (page - 1) + 1}-
-                  {pageSize * page < users?.count
-                    ? pageSize * page
-                    : users?.count}{" "}
-                  od {users?.count} &nbsp;&nbsp;{" "}
-                </span>
-                <Button
-                  variant="light"
-                  className="p-0"
-                  disabled={users?.previous ? false : true}
-                  onClick={() => {
-                    setPage((page) => page - 1);
-                  }}
-                >
-                  <img src={leftArrow} alt="" />
-                </Button>{" "}
-                <Button
-                  disabled={users?.next ? false : true}
-                  onClick={() => {
-                    setPage((page) => page + 1);
-                  }}
-                  className="p-0"
-                  variant="light"
-                >
-                  {" "}
-                  <img src={rightArrow} alt="" />
-                </Button>
-              </div>
-            </section>
           </section>
         </div>
       </main>

@@ -13,41 +13,35 @@ import Zaduzbe from "./Zaduzbe";
 import Autori from "./Autori";
 import Izdavaci from "./Izdavaci";
 import Zanrovi from "./Zanrovi";
+import Jezici from "./Jezici";
+import Home from "./Home";
+import UserLogin from "./UserLogin";
+import PrivateUserRoute from "./PrivateUserRoute";
+import Knjige from "./user/Knjige";
 
 function App() {
   return (
-    <Container className="p-0 m-0 w-100 d-flex justify-content-center">
+    <Container className="p-0 m-0 w-100 h-100 d-flex justify-content-center">
       <Router>
         <AuthProvider>
           <Switch>
             <Route path="/admin/login" exact component={Login} />
             <Route path="/signup" exact component={Signup} />
             <Route path="/403" exact component={Error403} />
-            <Route path="/" exact component={Login} />
-            <PrivateRoute path="/dashboard" exact>
-              <Dashboard />
-            </PrivateRoute>
-            <PrivateRoute path="/admin/knjige">
-              <Books />
-            </PrivateRoute>
-            <PrivateRoute path="/admin/korisnici">
-              <Users />
-            </PrivateRoute>
-            <PrivateRoute path="/admin/zaposlenici">
-              <Zaposlenici />
-            </PrivateRoute>
-            <PrivateRoute path="/admin/zaduzbe">
-              <Zaduzbe />
-            </PrivateRoute>
-            <PrivateRoute path="/admin/autori">
-              <Autori />
-            </PrivateRoute>
-            <PrivateRoute path="/admin/izdavaci">
-              <Izdavaci />
-            </PrivateRoute>
-            <PrivateRoute path="/admin/zanrovi">
-              <Zanrovi />
-            </PrivateRoute>
+            <Route path="/" exact component={Home} />
+            <PrivateRoute path="/dashboard" exact component={Dashboard} />
+            <PrivateRoute path="/admin/knjige" component={Books} />
+            <PrivateRoute path="/admin/korisnici" component={Users} />
+            <PrivateRoute path="/admin/zaposlenici" component={Zaposlenici} />
+            <PrivateRoute path="/admin/zaduzbe" component={Zaduzbe} />
+            <PrivateRoute path="/admin/autori" component={Autori} />
+            <PrivateRoute path="/admin/izdavaci" component={Izdavaci} />
+            <PrivateRoute path="/admin/zanrovi" component={Zanrovi} />
+            <PrivateRoute path="/admin/jezici" component={Jezici} />
+            <Route path="/login">
+              <UserLogin />
+            </Route>
+            <PrivateUserRoute path="/knjige" comp={Knjige} />
           </Switch>
         </AuthProvider>
       </Router>

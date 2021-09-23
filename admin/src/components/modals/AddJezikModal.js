@@ -1,9 +1,9 @@
 import React, { useRef, useState } from "react";
 import { Alert, Button, Form, Modal } from "react-bootstrap";
 import Swal from "sweetalert2";
-import { addkategorija } from "../../services/kategorijaService";
+import { addjezik } from "../../services/jezikService";
 
-export default function AddZanrModal({ setAddedUser, ...props }) {
+export default function AddJezikModal({ setAddedUser, ...props }) {
   const nazivRef = useRef();
   const [error, setError] = useState(null);
 
@@ -15,16 +15,16 @@ export default function AddZanrModal({ setAddedUser, ...props }) {
     e.preventDefault();
     setError(null);
     if (validateForm()) {
-      const zanr = {
+      const jezik = {
         naziv: nazivRef.current.value,
       };
-      addkategorija(zanr)
-        .then((dbZanr) => {
-          setAddedUser(dbZanr);
+      addjezik(jezik)
+        .then((dbjezik) => {
+          setAddedUser(dbjezik);
           Swal.fire(
             "Uspješno dodano",
-            `Uspješno ste dodali žanr <strong>
-                ${dbZanr.data.naziv} .</strong></br></br>`,
+            `Uspješno ste dodali jezik <strong>
+                ${dbjezik.data.naziv} .</strong></br></br>`,
             "success"
           ).then((res) => {
             if (res.isConfirmed) props.onHide();
@@ -38,7 +38,7 @@ export default function AddZanrModal({ setAddedUser, ...props }) {
 
   return (
     <Modal {...props}>
-      <Modal.Header>Dodaj žanr</Modal.Header>
+      <Modal.Header>Dodaj jezik</Modal.Header>
       <Modal.Body>
         <Form.Group className="my-2">
           <Form.Label>Naziv*</Form.Label>

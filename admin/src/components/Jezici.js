@@ -7,12 +7,12 @@ import addIcon from "../assets/img/add.svg";
 import MenuComponent from "./Menu";
 import { useAuth } from "../contexts/AuthContext";
 import moreIcon from "../assets/img/more.svg";
-import { getautors } from "../services/autorService";
-import EditAutorModal from "./modals/EditAutorModal";
-import AddAutorModal from "./modals/AddAutorModal";
+import { getjezike } from "../services/jezikService";
+import AddJezikModal from "./modals/AddJezikModal";
+import EditJezikModal from "./modals/EditJezikModal";
 
 //
-export default function Autori() {
+export default function Jezici() {
   const { currentUser } = useAuth();
   const [modalAddShow, setModalAddShow] = useState(false);
   const [modalEditShow, setModalEditShow] = useState(false);
@@ -28,12 +28,12 @@ export default function Autori() {
     setQuery(searchRef.current.value);
   }
   useEffect(() => {
-    document.title = "eBiblioteka Cloud-Autori";
+    document.title = "eBiblioteka Cloud-Jezici";
   }, []);
   useEffect(() => {
-    getautors().then((data) => {
+    getjezike().then((data) => {
       let filtered_users = data?.filter((user) => {
-        return user?.ime?.toLowerCase().includes(query?.trim().toLowerCase());
+        return user.naziv.toLowerCase().includes(query.trim().toLowerCase());
       });
       setUsers(filtered_users);
     });
@@ -66,7 +66,7 @@ export default function Autori() {
           style={{ marginBottom: "1rem !important" }}
         >
           <h1>
-            <strong>Autori</strong>
+            <strong>Jezici</strong>
           </h1>
           <div className="user-detail d-flex">
             <span>
@@ -98,13 +98,13 @@ export default function Autori() {
               className="ps-5 search-input"
               onChange={handleSubmit}
               type="search"
-              placeholder="Pretraži po imenu, email-u ili korisničkom ID-u"
+              placeholder="Pretraži po nazivu"
               ref={searchRef}
             />
           </section>
           <section
             id="books-pagination"
-            className="d-flex mb-5 flex-column justify-content-center align-items-center"
+            className="d-flex flex-column justify-content-center align-items-center"
             style={{
               display: "flex",
               justifyContent: "center",
@@ -121,7 +121,7 @@ export default function Autori() {
                   marginBottom: "0rem",
                 }}
               >
-                <strong>Svi autori</strong>
+                <strong>Svi jezici</strong>
               </h3>
               <div className="d-flex align-items-center">
                 <Button
@@ -149,9 +149,6 @@ export default function Autori() {
                   <th style={{ width: "150px" }} className="px-3">
                     Ime
                   </th>
-                  <th style={{ width: "100px" }} className="p-2">
-                    Prezime
-                  </th>
 
                   <th className="p-2" style={{ width: "50px" }}></th>
                 </tr>
@@ -164,34 +161,16 @@ export default function Autori() {
                 }}
               >
                 {users !== null ? (
-                  users?.map((user) => (
-                    <tr className="book-row" key={user.id}>
+                  users?.map((jezik) => (
+                    <tr className="book-row" key={jezik.id}>
                       <td className="p-2">
                         <div
                           className="p-1 w-100 h-100 d-flex align-items-center"
                           style={{ textAlign: "center", paddingRight: "3rem" }}
                         >
-                          <figure
-                            style={{
-                              marginBottom: "0px",
-                              marginRight: "1em",
-                            }}
-                          >
-                            <Image
-                              style={{
-                                borderRadius: "50px",
-                              }}
-                              height="40"
-                              width="40"
-                              src={`https://eu.ui-avatars.com/api/?name=${user.ime}+${user.prezime}&rounded=true&background=0af`}
-                              alt=""
-                            />
-                          </figure>
-
-                          <span title={user.ime}>{user.ime}</span>
+                          <span title={jezik.naziv}>{jezik.naziv}</span>
                         </div>
                       </td>
-                      <td className="p-2">{user.prezime}</td>
 
                       <td className="p-2" align="right">
                         <Dropdown drop="left">
@@ -206,7 +185,7 @@ export default function Autori() {
                           <Dropdown.Menu>
                             <Dropdown.Item
                               onClick={() => {
-                                setUserForEdit(user);
+                                setUserForEdit(jezik);
                                 setModalEditShow(true);
                               }}
                               eventKey="1"
@@ -220,7 +199,7 @@ export default function Autori() {
                   ))
                 ) : (
                   <tr>
-                    <td>Trenutno nema autora</td>
+                    <td>Trenutno nema jezika</td>
                   </tr>
                 )}
               </tbody>
@@ -228,7 +207,7 @@ export default function Autori() {
           </section>
         </div>
       </main>
-      <AddAutorModal
+      <AddJezikModal
         setAddedUser={setAddedUser}
         show={modalAddShow}
         onHide={() => {
@@ -236,7 +215,7 @@ export default function Autori() {
           setModalAddShow(false);
         }}
       />
-      <EditAutorModal
+      <EditJezikModal
         setAddedUser={setAddedUser}
         show={modalEditShow}
         onHide={() => {

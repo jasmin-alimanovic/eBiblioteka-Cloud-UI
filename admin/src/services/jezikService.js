@@ -11,7 +11,7 @@ export async function getjezike() {
 }
 
 export async function addjezik(jezik) {
-  axios({
+  return axios({
     method: "post",
     url: addjezikURL,
     headers: { "Content-Type": "application/json" },
@@ -19,10 +19,10 @@ export async function addjezik(jezik) {
   });
 }
 export async function updatejezik(id, jezik) {
-  axios({
+  return axios({
     method: "put",
     url: `${updatejezikURL}/${id}`,
     data: jezik,
-    headers: "application/json",
+    headers: { "Content-Type": "application/json" },
   });
 }

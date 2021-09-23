@@ -17,6 +17,7 @@ import kategorijaIcon from "../assets/img/kategorija.svg";
 import person from "../assets/img/person.svg";
 import logoutIcon from "../assets/img/logout.svg";
 import postavke from "../assets/img/postavke.svg";
+import langIcon from "../assets/img/language.svg";
 import { useAuth } from "../contexts/AuthContext";
 import { Link } from "react-router-dom";
 
@@ -101,6 +102,15 @@ function MenuComponent() {
             Zadužbe
             <Link to="/admin/zaduzbe" />
           </MenuItem>
+          {currentUser && currentUser.uloga.naziv === "Admin" && (
+            <MenuItem
+              title="Zaposlenici"
+              icon={<img src={person} alt="person icon" />}
+            >
+              Zaposlenici
+              <Link to="/admin/zaposlenici" />
+            </MenuItem>
+          )}
           <MenuItem
             title="Žanrovi"
             icon={<img src={kategorijaIcon} alt="category icon" />}
@@ -122,15 +132,13 @@ function MenuComponent() {
             Izdavači
             <Link to="/admin/izdavaci" />
           </MenuItem>
-          {currentUser && currentUser.uloga.naziv === "Admin" && (
-            <MenuItem
-              title="Zaposlenici"
-              icon={<img src={person} alt="person icon" />}
-            >
-              Zaposlenici
-              <Link to="/admin/zaposlenici" />
-            </MenuItem>
-          )}
+          <MenuItem
+            title="Jezici"
+            icon={<img src={langIcon} alt="person icon" />}
+          >
+            Jezici
+            <Link to="/admin/jezici" />
+          </MenuItem>
         </SidebarContent>
         <SidebarFooter className="mb-5 mt-0">
           <MenuItem

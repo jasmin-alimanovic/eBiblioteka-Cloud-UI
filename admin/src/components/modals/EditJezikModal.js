@@ -1,14 +1,14 @@
 import React, { useRef, useState } from "react";
 import { Modal, Button, Form, Alert } from "react-bootstrap";
-import { updatekategorija } from "../../services/kategorijaService";
+import { updatejezik } from "../../services/jezikService";
 import Swal from "sweetalert2";
 
-export default function EditZanrModal({ setAddedUser, user, ...props }) {
+export default function EditJezikModal({ setAddedUser, user, ...props }) {
   const nazivRef = useRef();
   const [error, setError] = useState(null);
   function validateForm() {
     if (nazivRef.current.value === "") {
-      setError("Unesite ime");
+      setError("Unesite naziv");
       return false;
     }
     return true;
@@ -19,11 +19,11 @@ export default function EditZanrModal({ setAddedUser, user, ...props }) {
       const userDb = {
         naziv: nazivRef.current.value,
       };
-      updatekategorija(user.id, userDb).then((res) => {
+      updatejezik(user.id, userDb).then((res) => {
         setAddedUser(res.data);
         Swal.fire(
           "Uspješno uređeno",
-          `Uspješno ste uredili žanr ${user.naziv}`,
+          `Uspješno ste uredili jezik ${user.naziv}`,
           "success"
         ).then((res) => {
           if (res.isConfirmed) props.onHide();
@@ -43,7 +43,7 @@ export default function EditZanrModal({ setAddedUser, user, ...props }) {
       >
         <Modal.Header>
           <Modal.Title id="contained-modal-title-vcenter">
-            Uredi žanr
+            Uredi jezik
           </Modal.Title>
         </Modal.Header>
         <Modal.Body scrollable="true">

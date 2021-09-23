@@ -39,15 +39,18 @@ export default function AuthProvider({ children }) {
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user) {
-        getZaposlenikByFID(user.uid).then((data) => {
-          if (data) setCurrentUser({ ...user, ...data });
-          else {
+        console.log(user);
+        getZaposlenikByFID(user.uid)
+          .then((data) => {
+            if (data) setCurrentUser({ ...user, ...data });
+            setLoading(false);
+          })
+          .catch(() => {
             getUserByFID(user.uid).then((u) => {
               setCurrentUser({ ...userEvent, ...u });
             });
-          }
-          setLoading(false);
-        });
+            setLoading(false);
+          });
       } else {
         setCurrentUser(null);
         setLoading(false);

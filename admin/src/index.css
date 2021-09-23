@@ -20,13 +20,18 @@
   box-shadow: 0 1px 2px 0 rgb(60 64 67 / 30%), 0 1px 3px 1px rgb(60 64 67 / 15%);
 }
 html {
+  height: 100%;
   width: 100%;
-  min-height: 100%;
   background-color: #f6f7f9;
   overflow: scroll;
 }
 body {
-  min-height: 100%;
+  height: 100%;
+  width: 100%;
+  background-color: #f6f7f9;
+}
+#root {
+  height: 100%;
   width: 100%;
   background-color: #f6f7f9;
 }
