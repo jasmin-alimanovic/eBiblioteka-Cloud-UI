@@ -5,31 +5,31 @@ import { Form, Image, Dropdown, Button } from "react-bootstrap";
 import searchIcon from "../assets/img/search.svg";
 import addIcon from "../assets/img/add.svg";
 import sortIcon from "../assets/img/sort.svg";
-import AddBookModal from "./modals/AddBookModal";
-import { getbooks } from "../services/bookService";
 import MenuComponent from "./Menu";
 import { useAuth } from "../contexts/AuthContext";
 import leftArrow from "../assets/img/left-arrow.svg";
 import rightArrow from "../assets/img/right-arrow.svg";
 import moreIcon from "../assets/img/more.svg";
-import EditBookModal from "./modals/EditBookModal";
 import upIcon from "../assets/img/sort-up.svg";
 import downIcon from "../assets/img/sort-down.svg";
 import IzdajBookModal from "./modals/IzdajBookModal";
+import { getUsers } from "../services/userService";
+import AddUserModal from "./modals/AddUserModal";
+import EditUserModal from "./modals/EditUserModal";
 
 //
-export default function Books() {
+export default function Users() {
   const { currentUser } = useAuth();
   const [modalAddShow, setModalAddShow] = useState(false);
   const [modalEditShow, setModalEditShow] = useState(false);
   const [activeSort, setActiveSort] = useState(1);
-  const [books, setBooks] = useState(null);
+  const [users, setUsers] = useState(null);
   const [pageSize, setPageSize] = useState(5);
   const [page, setPage] = useState(1);
   const [query, setQuery] = useState("");
   const [sort, setSort] = useState("id_desc");
-  const [addedBook, setAddedBook] = useState(null);
-  const [bookForEdit, setBookForEdit] = useState(null);
+  const [addedUser, setAddedUser] = useState(null);
+  const [userForEdit, setUserForEdit] = useState(null);
   const [izdajKnjigu, setIzdajKnjigu] = useState(null);
   const [modalIzdajShow, setModalIzdajShow] = useState(false);
 
@@ -39,29 +39,14 @@ export default function Books() {
   function handleSubmit() {
     setQuery(searchRef.current.value);
   }
-
-  function HiglightTExt(text, highlight) {
-    const parts = text.split(new RegExp(`(${highlight})`, "gi"));
-    return (
-      <span>
-        {parts.map((part) =>
-          part.toLowerCase() === highlight.toLowerCase() ? (
-            <b key={Math.random() * 500}>{part}</b>
-          ) : (
-            part
-          )
-        )}
-      </span>
-    );
-  }
   useEffect(() => {
-    document.title = "eBiblioteka Cloud-Knjige";
+    document.title = "eBiblioteka Cloud-Korisnici";
   }, []);
   useEffect(() => {
-    getbooks(sort, query, page, pageSize).then((data) => {
-      setBooks(data);
+    getUsers(sort, query, page, pageSize).then((data) => {
+      setUsers(data);
     });
-  }, [page, pageSize, query, sort, addedBook]);
+  }, [page, pageSize, query, sort, addedUser]);
   // The forwardRef is important!!
   // Dropdown needs access to the DOM node in order to position the Menu
   const CustomToggle = React.forwardRef(({ children, onClick, dots }, ref) => (
@@ -89,7 +74,7 @@ export default function Books() {
           style={{ marginBottom: "1rem !important" }}
         >
           <h1>
-            <strong>Knjige</strong>
+            <strong>Korisnici</strong>
           </h1>
           <div className="user-detail d-flex">
             <span>
@@ -106,7 +91,7 @@ export default function Books() {
             </span>
           </div>
         </section>
-        <div id="books" className="mx-2">
+        <div id="books" className="ms-1">
           <section id="search-section w-100">
             <Image
               style={{
@@ -120,20 +105,37 @@ export default function Books() {
             <Form.Control
               className="ps-5 search-input"
               onChange={handleSubmit}
-              placeholder="Pretraži..."
+              type="search"
+              placeholder="Pretraži po imenu, email-u, korisničkom imenu ili korisničkom ID-u"
               ref={searchRef}
             />
           </section>
           <section
-            id="books-header"
-            className="d-flex mt-4 justify-content-between"
+            id="books-pagination"
+            className="d-flex flex-column justify-content-center align-items-center"
+            style={{
+              display: "flex",
+              justifyContent: "center",
+            }}
           >
-            <h3>
-              <strong>Sve knjige</strong>
-            </h3>
-            <div className="d-flex">
+            <section
+              id="books-header"
+              className="d-flex mt-4 justify-content-between w-100"
+            >
+              <h3
+                style={{
+                  // marginLeft: "2rem",
+                  marginTop: "1rem",
+                  marginBottom: "0rem",
+                }}
+              >
+                <strong>Svi korisnici</strong>
+              </h3>
               <div className="d-flex align-items-center">
-                <Dropdown className="ms-2">
+                <Dropdown
+                  className="mt-2"
+                  style={{ height: "20px", textAlign: "end" }}
+                >
                   <Dropdown.Toggle
                     as={CustomToggle}
                     id="dropdown-custom-components"
@@ -158,48 +160,51 @@ export default function Books() {
                       active={activeSort === 2}
                       onClick={() => {
                         setActiveSort(2);
-                        setSort("naziv");
+                        setSort("prezime");
                       }}
                       eventKey="2"
                     >
-                      Naziv <img alt="" src={upIcon} />
+                      Prezime <img alt="" src={upIcon} />
                     </Dropdown.Item>
                     <Dropdown.Item
                       active={activeSort === 3}
                       onClick={() => {
                         setActiveSort(3);
-                        setSort("naziv_desc");
+                        setSort("prezime_desc");
                       }}
                       eventKey="2"
                     >
-                      Naziv <img alt="" src={downIcon} />
+                      Prezime <img alt="" src={downIcon} />
                     </Dropdown.Item>
 
                     <Dropdown.Item
                       active={activeSort === 6}
                       onClick={() => {
                         setActiveSort(6);
-                        setSort("godina_desc");
+                        setSort("datum_desc");
                       }}
                       eventKey="4"
                     >
-                      Godina izdavanja <img alt="" src={downIcon} />
+                      Datum uclanjenja <img alt="" src={downIcon} />
                     </Dropdown.Item>
                     <Dropdown.Item
                       active={activeSort === 7}
                       onClick={() => {
                         setActiveSort(7);
-                        setSort("godina");
+                        setSort("datum");
                       }}
                       eventKey="5"
                     >
-                      Godina izdavanja <img alt="" src={upIcon} />
+                      Datum uclanjenja <img alt="" src={upIcon} />
                     </Dropdown.Item>
                   </Dropdown.Menu>
                 </Dropdown>
-              </div>
-              <div className="d-flex ms-4 align-items-center">
                 <Button
+                  style={{
+                    marginTop: "1rem",
+                    marginLeft: "3rem",
+                    borderRadius: "7px",
+                  }}
                   onClick={() => {
                     setModalAddShow(true);
                   }}
@@ -208,35 +213,33 @@ export default function Books() {
                   <span className="ms-2">Dodaj</span>
                 </Button>
               </div>
-            </div>
-          </section>
-          <section id="books-pagination">
-            <table className="w-100 mt-5 book-table">
+            </section>
+            <table className="book-table mt-5 justify-self-center">
               <thead
                 style={{
                   borderBottom: "2px solid #0004",
                 }}
               >
-                <tr className="m-5">
-                  <th className="p-2" style={{ width: "150px" }}>
-                    Naziv knjige
-                  </th>
-                  <th style={{ width: "150px" }} className="p-2">
-                    Autor
+                <tr className="m-5 book-row">
+                  <th style={{ width: "150px" }} className="px-3">
+                    Ime i prezime
                   </th>
                   <th style={{ width: "100px" }} className="p-2">
-                    Izdavač
+                    Korisničko ime
                   </th>
                   <th style={{ width: "100px" }} className="p-2">
-                    Dostupno
+                    Email
                   </th>
                   <th style={{ width: "100px" }} className="p-2">
-                    Godina izdavanja
+                    Telefon
                   </th>
                   <th style={{ width: "100px" }} className="p-2">
-                    Opis
+                    Adresa
                   </th>
-                  <th style={{ width: "50px" }} className="p-2"></th>
+                  <th style={{ width: "150px" }} className="ps-2">
+                    Datum učlanjenja
+                  </th>
+                  <th className="p-2" style={{ width: "50px" }}></th>
                 </tr>
               </thead>
               <tbody
@@ -246,17 +249,13 @@ export default function Books() {
                   color: "#0000008A",
                 }}
               >
-                {books !== null && books.data.length > 0 ? (
-                  books.data.map((book) => (
-                    <tr
-                      className="book-row"
-                      style={{ maxHeight: "100px" }}
-                      key={book.id}
-                    >
-                      <td>
+                {users !== null && users.data.length > 0 ? (
+                  users.data.map((user) => (
+                    <tr className="book-row" key={user.id}>
+                      <td className="p-2">
                         <div
-                          className="p-2 w-100 h-100 d-flex align-items-center"
-                          style={{ textAlign: "center" }}
+                          className="p-1 w-100 h-100 d-flex align-items-center"
+                          style={{ textAlign: "center", paddingRight: "3rem" }}
                         >
                           <figure
                             style={{
@@ -270,37 +269,28 @@ export default function Books() {
                               }}
                               height="30"
                               width="30"
-                              src={book.imageUrl}
+                              src={`https://eu.ui-avatars.com/api/?name=${user.ime}+${user.prezime}&rounded=true&background=0af`}
                               alt=""
                             />
                           </figure>
 
-                          {HiglightTExt(book.naziv, query)}
+                          <span title={user.ime + " " + user.prezime}>
+                            {user.ime + " " + user.prezime}
+                          </span>
                         </div>
                       </td>
+                      <td className="p-2">{user.korisnickoIme}</td>
                       <td className="p-2">
-                        {HiglightTExt(
-                          book.autor.ime + " " + book.autor.prezime,
-                          query
-                        )}
+                        <span title={user.email}>{user.email}</span>
+                      </td>
+                      <td className="p-2">{user.telefon}</td>
+                      <td className="p-2">
+                        <span title={user.adresa}>{user.adresa}</span>
                       </td>
                       <td className="p-2">
-                        {HiglightTExt(book.izdavac.naziv, query)}
+                        {new Date(user.datumUclanjenja).toLocaleDateString()}
                       </td>
-                      <td className="p-2">{book.dostupno}</td>
-                      <td className="p-2">{book.godinaIzdavanja}</td>
-                      <td className="p-2">
-                        <span
-                          title={book.opis}
-                          style={{
-                            overflow: "hidden",
-                            maxHeight: "70px",
-                            textOverflow: "ellipsis",
-                          }}
-                        >
-                          <span>{book.opis}</span>
-                        </span>
-                      </td>
+
                       <td className="p-2" align="right">
                         <Dropdown drop="left">
                           <Dropdown.Toggle
@@ -314,22 +304,12 @@ export default function Books() {
                           <Dropdown.Menu>
                             <Dropdown.Item
                               onClick={() => {
-                                setBookForEdit(book);
+                                setUserForEdit(user);
                                 setModalEditShow(true);
                               }}
                               eventKey="1"
                             >
                               Uredi
-                            </Dropdown.Item>
-
-                            <Dropdown.Item
-                              eventKey="3"
-                              onClick={() => {
-                                setIzdajKnjigu(book);
-                                setModalIzdajShow(true);
-                              }}
-                            >
-                              Izdaj
                             </Dropdown.Item>
                           </Dropdown.Menu>
                         </Dropdown>
@@ -338,7 +318,7 @@ export default function Books() {
                   ))
                 ) : (
                   <tr>
-                    <td>Trenutno nema knjiga</td>
+                    <td>Trenutno nema korisnika</td>
                   </tr>
                 )}
               </tbody>
@@ -403,15 +383,15 @@ export default function Books() {
               <div className="p-0 d-flex align-items-center">
                 <span className="me-3">
                   {pageSize * (page - 1) + 1}-
-                  {pageSize * page < books?.count
+                  {pageSize * page < users?.count
                     ? pageSize * page
-                    : books?.count}{" "}
-                  od {books?.count} &nbsp;&nbsp;{" "}
+                    : users?.count}{" "}
+                  od {users?.count} &nbsp;&nbsp;{" "}
                 </span>
                 <Button
                   variant="light"
                   className="p-0"
-                  disabled={books?.previous ? false : true}
+                  disabled={users?.previous ? false : true}
                   onClick={() => {
                     setPage((page) => page - 1);
                   }}
@@ -419,7 +399,7 @@ export default function Books() {
                   <img src={leftArrow} alt="" />
                 </Button>{" "}
                 <Button
-                  disabled={books?.next ? false : true}
+                  disabled={users?.next ? false : true}
                   onClick={() => {
                     setPage((page) => page + 1);
                   }}
@@ -434,26 +414,26 @@ export default function Books() {
           </section>
         </div>
       </main>
-      <AddBookModal
-        setAddedBook={setAddedBook}
+      <AddUserModal
+        setAddedUser={setAddedUser}
         show={modalAddShow}
         onHide={() => {
-          setAddedBook(null);
+          setAddedUser(null);
           setModalAddShow(false);
         }}
       />
-      <EditBookModal
-        setAddedBook={setAddedBook}
+      <EditUserModal
+        setAddedUser={setAddedUser}
         show={modalEditShow}
         onHide={() => {
-          setBookForEdit(null);
+          setUserForEdit(null);
           setModalEditShow(false);
-          setAddedBook(null);
+          setAddedUser(null);
         }}
-        book={bookForEdit}
+        user={userForEdit}
       />
       <IzdajBookModal
-        book={izdajKnjigu}
+        user={izdajKnjigu}
         show={modalIzdajShow}
         onHide={() => {
           setIzdajKnjigu(null);

@@ -9,7 +9,7 @@ export async function getkategorijas() {
 }
 
 export async function addkategorija(kategorija) {
-  axios({
+  return axios({
     method: "post",
     url: kategorijasURL,
     headers: { "Content-Type": "application/json" },
@@ -17,10 +17,10 @@ export async function addkategorija(kategorija) {
   });
 }
 export async function updatekategorija(id, kategorija) {
-  axios({
+  return axios({
     method: "put",
     url: `${kategorijasURL}/${id}`,
     data: kategorija,
-    headers: "application/json",
+    headers: { "Content-Type": "application/json" },
   });
 }

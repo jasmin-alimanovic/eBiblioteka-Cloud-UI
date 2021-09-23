@@ -27,10 +27,10 @@ export async function addBook(Book) {
   });
 }
 export async function updateBook(id, Book) {
-  axios({
+  return axios({
     method: "put",
     url: `${updateBookURL}/${id}`,
     data: Book,
-    headers: "application/json",
+    headers: { "Content-Type": "application/json" },
   });
 }

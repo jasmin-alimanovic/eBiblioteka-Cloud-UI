@@ -3,35 +3,28 @@ import { Form, Image, Dropdown, Button } from "react-bootstrap";
 
 //local imports
 import searchIcon from "../assets/img/search.svg";
-import addIcon from "../assets/img/add.svg";
+// import addIcon from "../assets/img/add.svg";
 import sortIcon from "../assets/img/sort.svg";
-import AddBookModal from "./modals/AddBookModal";
-import { getbooks } from "../services/bookService";
 import MenuComponent from "./Menu";
 import { useAuth } from "../contexts/AuthContext";
 import leftArrow from "../assets/img/left-arrow.svg";
 import rightArrow from "../assets/img/right-arrow.svg";
-import moreIcon from "../assets/img/more.svg";
-import EditBookModal from "./modals/EditBookModal";
+// import moreIcon from "../assets/img/more.svg";
 import upIcon from "../assets/img/sort-up.svg";
 import downIcon from "../assets/img/sort-down.svg";
-import IzdajBookModal from "./modals/IzdajBookModal";
+import { getZaduzbe, updateZaduzba } from "../services/zaduzbaService";
+import { updateBook } from "../services/bookService";
+import Swal from "sweetalert2";
 
 //
-export default function Books() {
+export default function Zaduzbe() {
   const { currentUser } = useAuth();
-  const [modalAddShow, setModalAddShow] = useState(false);
-  const [modalEditShow, setModalEditShow] = useState(false);
   const [activeSort, setActiveSort] = useState(1);
-  const [books, setBooks] = useState(null);
+  const [zaduzbe, setZaduzbe] = useState(null);
   const [pageSize, setPageSize] = useState(5);
   const [page, setPage] = useState(1);
   const [query, setQuery] = useState("");
   const [sort, setSort] = useState("id_desc");
-  const [addedBook, setAddedBook] = useState(null);
-  const [bookForEdit, setBookForEdit] = useState(null);
-  const [izdajKnjigu, setIzdajKnjigu] = useState(null);
-  const [modalIzdajShow, setModalIzdajShow] = useState(false);
 
   const searchRef = useRef("");
 
@@ -39,29 +32,52 @@ export default function Books() {
   function handleSubmit() {
     setQuery(searchRef.current.value);
   }
+  async function VratiZaduzbu(e, zaduzba, book) {
+    e.preventDefault();
 
-  function HiglightTExt(text, highlight) {
-    const parts = text.split(new RegExp(`(${highlight})`, "gi"));
-    return (
-      <span>
-        {parts.map((part) =>
-          part.toLowerCase() === highlight.toLowerCase() ? (
-            <b key={Math.random() * 500}>{part}</b>
-          ) : (
-            part
-          )
-        )}
-      </span>
-    );
+    await updateZaduzba(zaduzba.id, { isZavrsena: true });
+    zaduzba.isZavrsena = true;
+    setZaduzbe({ ...zaduzbe, zaduzba });
+    const _book = {
+      ...book,
+      dostupno: book.dostupno + 1,
+      kategorijaId: book.kategorija.id,
+      izdavacId: book.izdavac.id,
+      jezikId: book.jezik.id,
+      autorId: book.autor.id,
+    };
+    await updateBook(book.id, _book);
   }
+
+  function detaljiZaduzbe(zaduzba) {
+    Swal.fire(
+      `Zaduzba br. ${zaduzba.id}`,
+      `<ul style="list-style:none; " className="klasa" align=left>
+        <li><strong>Šifra:</strong> ${zaduzba.id}</li>
+        <li><strong>Knjiga:</strong> ${zaduzba.knjiga.naziv}</li>
+        <li><strong>Korisnik:</strong> ${zaduzba.korisnik.ime} ${
+        zaduzba.korisnik.prezime
+      }</li>
+        <li><strong>Datum zaduživanja:</strong> ${new Date(
+          zaduzba.datumZaduzbe
+        ).toLocaleDateString()}</li>
+        <li><strong>Datum vraćanja:</strong> ${new Date(
+          zaduzba.datumPovratka
+        ).toLocaleDateString()}</li>
+      
+      </ul>`,
+      "info"
+    ).then((res) => {});
+  }
+
   useEffect(() => {
-    document.title = "eBiblioteka Cloud-Knjige";
+    document.title = "eBiblioteka Cloud-Zadužbe";
   }, []);
   useEffect(() => {
-    getbooks(sort, query, page, pageSize).then((data) => {
-      setBooks(data);
+    getZaduzbe(sort, query, page, pageSize).then((data) => {
+      setZaduzbe(data);
     });
-  }, [page, pageSize, query, sort, addedBook]);
+  }, [page, pageSize, query, sort]);
   // The forwardRef is important!!
   // Dropdown needs access to the DOM node in order to position the Menu
   const CustomToggle = React.forwardRef(({ children, onClick, dots }, ref) => (
@@ -85,11 +101,11 @@ export default function Books() {
       <div className="push"></div>
       <main role="main" id="main" className="w-100">
         <section
-          className="my-5 mx-2 d-flex justify-content-between"
+          className="my-5 ms-2 d-flex justify-content-between"
           style={{ marginBottom: "1rem !important" }}
         >
           <h1>
-            <strong>Knjige</strong>
+            <strong>Zadužbe</strong>
           </h1>
           <div className="user-detail d-flex">
             <span>
@@ -106,7 +122,7 @@ export default function Books() {
             </span>
           </div>
         </section>
-        <div id="books" className="mx-2">
+        <div id="books" className="ms-1">
           <section id="search-section w-100">
             <Image
               style={{
@@ -120,20 +136,37 @@ export default function Books() {
             <Form.Control
               className="ps-5 search-input"
               onChange={handleSubmit}
-              placeholder="Pretraži..."
+              type="search"
+              placeholder="Pretraži korisniku, knjizi ili ID-u"
               ref={searchRef}
             />
           </section>
           <section
-            id="books-header"
-            className="d-flex mt-4 justify-content-between"
+            id="books-pagination"
+            className="d-flex flex-column justify-content-center align-items-center"
+            style={{
+              display: "flex",
+              justifyContent: "center",
+            }}
           >
-            <h3>
-              <strong>Sve knjige</strong>
-            </h3>
-            <div className="d-flex">
+            <section
+              id="books-header"
+              className="d-flex mt-4 justify-content-between w-100"
+            >
+              <h3
+                style={{
+                  // marginLeft: "2rem",
+                  marginTop: "1rem",
+                  marginBottom: "0rem",
+                }}
+              >
+                <strong>Sve zadužbe</strong>
+              </h3>
               <div className="d-flex align-items-center">
-                <Dropdown className="ms-2">
+                <Dropdown
+                  className="mt-2"
+                  style={{ height: "20px", textAlign: "end" }}
+                >
                   <Dropdown.Toggle
                     as={CustomToggle}
                     id="dropdown-custom-components"
@@ -158,85 +191,70 @@ export default function Books() {
                       active={activeSort === 2}
                       onClick={() => {
                         setActiveSort(2);
-                        setSort("naziv");
+                        setSort("prezime");
                       }}
                       eventKey="2"
                     >
-                      Naziv <img alt="" src={upIcon} />
+                      Prezime <img alt="" src={upIcon} />
                     </Dropdown.Item>
                     <Dropdown.Item
                       active={activeSort === 3}
                       onClick={() => {
                         setActiveSort(3);
-                        setSort("naziv_desc");
+                        setSort("prezime_desc");
                       }}
                       eventKey="2"
                     >
-                      Naziv <img alt="" src={downIcon} />
+                      Prezime <img alt="" src={downIcon} />
                     </Dropdown.Item>
 
                     <Dropdown.Item
                       active={activeSort === 6}
                       onClick={() => {
                         setActiveSort(6);
-                        setSort("godina_desc");
+                        setSort("email_desc");
                       }}
                       eventKey="4"
                     >
-                      Godina izdavanja <img alt="" src={downIcon} />
+                      Email <img alt="" src={downIcon} />
                     </Dropdown.Item>
                     <Dropdown.Item
                       active={activeSort === 7}
                       onClick={() => {
                         setActiveSort(7);
-                        setSort("godina");
+                        setSort("email");
                       }}
                       eventKey="5"
                     >
-                      Godina izdavanja <img alt="" src={upIcon} />
+                      Email <img alt="" src={upIcon} />
                     </Dropdown.Item>
                   </Dropdown.Menu>
                 </Dropdown>
               </div>
-              <div className="d-flex ms-4 align-items-center">
-                <Button
-                  onClick={() => {
-                    setModalAddShow(true);
-                  }}
-                >
-                  <Image src={addIcon} alt="sort icon" />
-                  <span className="ms-2">Dodaj</span>
-                </Button>
-              </div>
-            </div>
-          </section>
-          <section id="books-pagination">
-            <table className="w-100 mt-5 book-table">
+            </section>
+            <table className="book-table mt-5 justify-self-center">
               <thead
                 style={{
                   borderBottom: "2px solid #0004",
                 }}
               >
-                <tr className="m-5">
-                  <th className="p-2" style={{ width: "150px" }}>
-                    Naziv knjige
+                <tr className="m-5 book-row">
+                  <th style={{ width: "150px" }} className="p-2">
+                    Šifra
                   </th>
                   <th style={{ width: "150px" }} className="p-2">
-                    Autor
+                    Status
                   </th>
                   <th style={{ width: "100px" }} className="p-2">
-                    Izdavač
+                    Korisnik
                   </th>
                   <th style={{ width: "100px" }} className="p-2">
-                    Dostupno
+                    Knjiga
                   </th>
-                  <th style={{ width: "100px" }} className="p-2">
-                    Godina izdavanja
+                  <th style={{ width: "150px" }} className="ps-2">
+                    Datum zaduzivanja
                   </th>
-                  <th style={{ width: "100px" }} className="p-2">
-                    Opis
-                  </th>
-                  <th style={{ width: "50px" }} className="p-2"></th>
+                  <th style={{ width: "100px" }} className="ps-2"></th>
                 </tr>
               </thead>
               <tbody
@@ -246,99 +264,70 @@ export default function Books() {
                   color: "#0000008A",
                 }}
               >
-                {books !== null && books.data.length > 0 ? (
-                  books.data.map((book) => (
-                    <tr
-                      className="book-row"
-                      style={{ maxHeight: "100px" }}
-                      key={book.id}
-                    >
-                      <td>
+                {zaduzbe !== null && zaduzbe.data.length > 0 ? (
+                  zaduzbe.data.map((zaduzba) => (
+                    <tr className="book-row" key={zaduzba.id}>
+                      <td className="p-2">
                         <div
-                          className="p-2 w-100 h-100 d-flex align-items-center"
-                          style={{ textAlign: "center" }}
+                          className="p-1 w-100 h-100 d-flex align-items-center"
+                          style={{ textAlign: "center", paddingRight: "3rem" }}
                         >
-                          <figure
-                            style={{
-                              marginBottom: "0px",
-                              marginRight: "1em",
-                            }}
-                          >
-                            <Image
-                              style={{
-                                borderRadius: "50px",
-                              }}
-                              height="30"
-                              width="30"
-                              src={book.imageUrl}
-                              alt=""
-                            />
-                          </figure>
-
-                          {HiglightTExt(book.naziv, query)}
+                          <span title={zaduzba.id}>{zaduzba.id}</span>
                         </div>
                       </td>
                       <td className="p-2">
-                        {HiglightTExt(
-                          book.autor.ime + " " + book.autor.prezime,
-                          query
-                        )}
+                        {zaduzba.isZavrsena ? "Vraćena" : "Nije vraćena"}
                       </td>
-                      <td className="p-2">
-                        {HiglightTExt(book.izdavac.naziv, query)}
-                      </td>
-                      <td className="p-2">{book.dostupno}</td>
-                      <td className="p-2">{book.godinaIzdavanja}</td>
+
                       <td className="p-2">
                         <span
-                          title={book.opis}
-                          style={{
-                            overflow: "hidden",
-                            maxHeight: "70px",
-                            textOverflow: "ellipsis",
-                          }}
+                          title={
+                            zaduzba.korisnik.ime +
+                            " " +
+                            zaduzba.korisnik.prezime
+                          }
                         >
-                          <span>{book.opis}</span>
+                          {zaduzba.korisnik.ime +
+                            " " +
+                            zaduzba.korisnik.prezime}
                         </span>
                       </td>
-                      <td className="p-2" align="right">
-                        <Dropdown drop="left">
-                          <Dropdown.Toggle
-                            as={CustomToggle}
-                            id="dropdown-custom-components"
-                            dots={true}
+                      <td className="p-2">{zaduzba.knjiga.naziv}</td>
+                      <td className="p-2">
+                        <span
+                          title={new Date(
+                            zaduzba.datumZaduzbe
+                          ).toLocaleDateString()}
+                        >
+                          {new Date(zaduzba.datumZaduzbe).toLocaleDateString()}
+                        </span>
+                      </td>
+                      <td align="center" className="p-2">
+                        {!zaduzba.isZavrsena ? (
+                          <Button
+                            onClick={(e) => {
+                              VratiZaduzbu(e, zaduzba, zaduzba.knjiga);
+                              zaduzba.isZavrsena = true;
+                            }}
+                            variant="warning"
                           >
-                            <img src={moreIcon} alt="" />
-                          </Dropdown.Toggle>
-
-                          <Dropdown.Menu>
-                            <Dropdown.Item
-                              onClick={() => {
-                                setBookForEdit(book);
-                                setModalEditShow(true);
-                              }}
-                              eventKey="1"
-                            >
-                              Uredi
-                            </Dropdown.Item>
-
-                            <Dropdown.Item
-                              eventKey="3"
-                              onClick={() => {
-                                setIzdajKnjigu(book);
-                                setModalIzdajShow(true);
-                              }}
-                            >
-                              Izdaj
-                            </Dropdown.Item>
-                          </Dropdown.Menu>
-                        </Dropdown>
+                            Vrati
+                          </Button>
+                        ) : (
+                          <Button
+                            onClick={() => {
+                              detaljiZaduzbe(zaduzba);
+                            }}
+                          >
+                            Pogledaj
+                          </Button>
+                        )}
                       </td>
                     </tr>
                   ))
                 ) : (
                   <tr>
-                    <td>Trenutno nema knjiga</td>
+                    <td>Trenutno nema korisnika</td>
                   </tr>
                 )}
               </tbody>
@@ -403,15 +392,15 @@ export default function Books() {
               <div className="p-0 d-flex align-items-center">
                 <span className="me-3">
                   {pageSize * (page - 1) + 1}-
-                  {pageSize * page < books?.count
+                  {pageSize * page < zaduzbe?.count
                     ? pageSize * page
-                    : books?.count}{" "}
-                  od {books?.count} &nbsp;&nbsp;{" "}
+                    : zaduzbe?.count}{" "}
+                  od {zaduzbe?.count} &nbsp;&nbsp;{" "}
                 </span>
                 <Button
                   variant="light"
                   className="p-0"
-                  disabled={books?.previous ? false : true}
+                  disabled={zaduzbe?.previous ? false : true}
                   onClick={() => {
                     setPage((page) => page - 1);
                   }}
@@ -419,7 +408,7 @@ export default function Books() {
                   <img src={leftArrow} alt="" />
                 </Button>{" "}
                 <Button
-                  disabled={books?.next ? false : true}
+                  disabled={zaduzbe?.next ? false : true}
                   onClick={() => {
                     setPage((page) => page + 1);
                   }}
@@ -434,32 +423,6 @@ export default function Books() {
           </section>
         </div>
       </main>
-      <AddBookModal
-        setAddedBook={setAddedBook}
-        show={modalAddShow}
-        onHide={() => {
-          setAddedBook(null);
-          setModalAddShow(false);
-        }}
-      />
-      <EditBookModal
-        setAddedBook={setAddedBook}
-        show={modalEditShow}
-        onHide={() => {
-          setBookForEdit(null);
-          setModalEditShow(false);
-          setAddedBook(null);
-        }}
-        book={bookForEdit}
-      />
-      <IzdajBookModal
-        book={izdajKnjigu}
-        show={modalIzdajShow}
-        onHide={() => {
-          setIzdajKnjigu(null);
-          setModalIzdajShow(false);
-        }}
-      />
     </div>
   );
 }

@@ -1,8 +1,9 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import { addZaposlenik } from "../services/zaposlenikService";
 import { Form, Button, Alert, Card, Container } from "react-bootstrap";
 import { Link, useHistory } from "react-router-dom";
+import { getulogas } from "../services/ulogaService";
 function Signup() {
   const emailRef = useRef();
   const passwordRef = useRef();
@@ -12,6 +13,11 @@ function Signup() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const history = useHistory();
+  const [uloge, setUloge] = useState([]);
+
+  useEffect(() => {
+    getulogas().then((res) => setUloge(res));
+  }, []);
 
   //
   async function handleSubmit(e) {
@@ -23,30 +29,28 @@ function Signup() {
       setError("");
       setLoading(true);
       const u = await signup(emailRef.current.value, passwordRef.current.value);
-      console.log(u.user.uid);
+
       // const email = emailRef.current.value;
       // setTimeout(() => {}, 1000);
+      const ulogaId = uloge.find((uloga) => uloga.naziv === "Bibliotekar").id;
       let userDb = {
         firebaseId: u.user.uid,
         ime: "Jasmin",
         prezime: "Alimanovic",
         email: emailRef.current.value,
         telefon: "4232343",
-        ulogaId: 1,
+        ulogaId: ulogaId,
       };
-      console.log(userDb);
       await addZaposlenik(userDb);
       setTimeout(() => {
         history.push("/");
       }, 1000);
     } catch (err) {
       setError("err");
-      console.log(err);
     }
     setLoading(false);
   }
 
-  //console.log(users);
   return (
     <Container
       className="d-flex align-items-center justify-content-center w-100 h-100"

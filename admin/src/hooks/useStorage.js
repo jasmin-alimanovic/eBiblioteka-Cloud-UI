@@ -9,7 +9,6 @@ const useStorage = (file, bookName) => {
 
   useEffect(() => {
     const storageRef = storage.ref(bookName + "/" + file.name);
-
     storageRef.put(file).on(
       "state_changed",
       (snapshot) => {

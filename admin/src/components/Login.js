@@ -17,8 +17,8 @@ function Login() {
       setLoading(true);
       await login(emailRef.current.value, passwordRef.current.value);
       setTimeout(() => {
-        history.push("/");
-      }, 1000);
+        history.push("/dashboard");
+      }, 2000);
     } catch {
       setError("Neispravni podaci");
     }

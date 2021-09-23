@@ -5,13 +5,21 @@ const izdavacsURL = `${baseUrl}/izdavaci`;
 const addizdavacURL = `${izdavacsURL}/add-Izdavac`;
 const updateizdavacURL = `${izdavacsURL}/update`;
 
-export async function getizdavace() {
-  const res = await axios.get(izdavacsURL);
+export async function getizdavace(sort, q, index, size) {
+  const res = await axios.get(izdavacsURL, {
+    params: {
+      sort: sort,
+      q: q,
+      page_index: index,
+      page_size: size,
+    },
+  });
+  console.log(res.data);
   return res.data;
 }
 
 export async function addizdavac(izdavac) {
-  axios({
+  return axios({
     method: "post",
     url: addizdavacURL,
     headers: { "Content-Type": "application/json" },
@@ -19,10 +27,10 @@ export async function addizdavac(izdavac) {
   });
 }
 export async function updateizdavac(id, izdavac) {
-  axios({
+  return axios({
     method: "put",
     url: `${updateizdavacURL}/${id}`,
     data: izdavac,
-    headers: "application/json",
+    headers: { "Content-Type": "application/json" },
   });
 }

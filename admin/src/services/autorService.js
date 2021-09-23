@@ -9,7 +9,7 @@ export async function getautors() {
 }
 
 export async function addautor(autor) {
-  axios({
+  return axios({
     method: "post",
     url: autorsURL,
     headers: { "Content-Type": "application/json" },
@@ -17,10 +17,10 @@ export async function addautor(autor) {
   });
 }
 export async function updateautor(id, autor) {
-  axios({
+  return axios({
     method: "put",
     url: `${autorsURL}/${id}`,
     data: autor,
-    headers: "application/json",
+    headers: { "Content-Type": "application/json" },
   });
 }
