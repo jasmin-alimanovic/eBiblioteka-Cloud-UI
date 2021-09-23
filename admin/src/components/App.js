@@ -23,9 +23,8 @@ function App() {
           <Switch>
             <Route path="/admin/login" component={Login} />
             <Route path="/signup" exact component={Signup} />
-            <Route path="/" exact component={IzdajBookModal} />
             <Route path="/403" component={Error403} />
-            <Route path="/" render={<h1>Welcome</h1>} />
+            <Route path="/" exact render={<h1>Welcome</h1>} />
             <PrivateRoute path="/dashboard" exact component={Dashboard} />
             <PrivateRoute path="/admin/knjige" component={Books} />
             <PrivateRoute path="/admin/korisnici" component={Users} />
