@@ -7,7 +7,6 @@ import PrivateRoute from "./PrivateRoute";
 import { Container } from "react-bootstrap";
 import Books from "./Books";
 import Error403 from "./error/403";
-import IzdajBookModal from "./modals/IzdajBookModal";
 import Users from "./Users";
 import Zaposlenici from "./Zaposlenici";
 import Zaduzbe from "./Zaduzbe";
@@ -24,7 +23,7 @@ function App() {
             <Route path="/admin/login" component={Login} />
             <Route path="/signup" exact component={Signup} />
             <Route path="/403" component={Error403} />
-            <Route path="/" exact render={<h1>Welcome</h1>} />
+            <Route path="/" exact render={() => <div>Home</div>} />
             <PrivateRoute path="/dashboard" exact component={Dashboard} />
             <PrivateRoute path="/admin/knjige" component={Books} />
             <PrivateRoute path="/admin/korisnici" component={Users} />
