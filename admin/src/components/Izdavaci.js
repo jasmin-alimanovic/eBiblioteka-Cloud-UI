@@ -42,7 +42,6 @@ export default function Izdavaci() {
   useEffect(() => {
     getizdavace(sort, query, page, pageSize)
       .then((data) => {
-        console.log(data);
         setUsers(data);
       })
       .catch((e) => console.error(e));

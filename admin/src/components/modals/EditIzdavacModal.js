@@ -26,7 +26,6 @@ export default function EditIzdavacModal({ setAddedUser, user, ...props }) {
         sjediste: sjedisteRef.current.value,
       };
       updateizdavac(user.id, userDb).then((res) => {
-        console.log(res);
         setAddedUser(res.data);
         Swal.fire(
           "Uspješno uređeno",

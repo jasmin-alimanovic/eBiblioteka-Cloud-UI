@@ -26,7 +26,6 @@ export default function EditAutorModal({ setAddedUser, user, ...props }) {
         prezime: prezimeRef.current.value,
       };
       updateautor(user.id, userDb).then((res) => {
-        console.log(res);
         setAddedUser(res.data);
         Swal.fire(
           "Uspješno uređeno",

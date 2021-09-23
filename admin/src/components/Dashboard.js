@@ -40,12 +40,10 @@ export default function Dashboard() {
 
   useEffect(() => {
     getUsers("", "", 1, 5).then((data) => {
-      console.log(data);
       setUsers(data);
     });
     getNewUsers("", "", 1, 5).then((data) => {
       setNewUsers(data);
-      console.log(data);
     });
     getbooks("", "", 1, 5).then((data) => {
       setBooks(data);

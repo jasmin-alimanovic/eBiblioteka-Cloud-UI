@@ -31,7 +31,6 @@ export async function addZaposlenik(user) {
   });
 }
 export async function updateZaposlenik(id, user) {
-  console.log(id, user);
   return axios({
     method: "put",
     url: `${updateZaposlenikURL}/${id}`,

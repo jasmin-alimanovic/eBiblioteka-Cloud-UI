@@ -14,7 +14,6 @@ export async function getizdavace(sort, q, index, size) {
       page_size: size,
     },
   });
-  console.log(res.data);
   return res.data;
 }
 

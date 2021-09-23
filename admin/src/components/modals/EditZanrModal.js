@@ -20,7 +20,6 @@ export default function EditZanrModal({ setAddedUser, user, ...props }) {
         naziv: nazivRef.current.value,
       };
       updatekategorija(user.id, userDb).then((res) => {
-        console.log(res);
         setAddedUser(res.data);
         Swal.fire(
           "Uspješno uređeno",
