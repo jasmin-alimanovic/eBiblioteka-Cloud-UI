@@ -62,7 +62,7 @@ export default function Zaduzbe() {
           zaduzba.datumZaduzbe
         ).toLocaleDateString()}</li>
         <li><strong>Datum vraćanja:</strong> ${new Date(
-          zaduzba.datumPovratka
+          zaduzba.datumVracanja
         ).toLocaleDateString()}</li>
       
       </ul>`,
