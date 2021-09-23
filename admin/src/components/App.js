@@ -20,18 +20,10 @@ function App() {
       <Router>
         <AuthProvider>
           <Switch>
-            <Route path="/admin/login" component={Login} />
+            <Route path="/admin/login" exact component={Login} />
             <Route path="/signup" exact component={Signup} />
-            <Route path="/403" component={Error403} />
-            <Route
-              path="/"
-              exact
-              render={() => {
-                let d = process.env.REACT_APP_API_BASE_URL;
-                console.log(d);
-                return <div>Home</div>;
-              }}
-            />
+            <Route path="/403" exact component={Error403} />
+            <Route path="/" exact component={Login} />
             <PrivateRoute path="/dashboard" exact component={Dashboard} />
             <PrivateRoute path="/admin/knjige" component={Books} />
             <PrivateRoute path="/admin/korisnici" component={Users} />
