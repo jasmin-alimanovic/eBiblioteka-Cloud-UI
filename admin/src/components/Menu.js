@@ -24,6 +24,7 @@ import { Link } from "react-router-dom";
 function MenuComponent() {
   const { logout, currentUser } = useAuth();
   const [collapsed, setCollapsed] = useState(false);
+  const pathname = window.location.pathname;
   useEffect(() => {
     function handleResize() {
       if (window.innerWidth <= 1025) {
@@ -70,12 +71,15 @@ function MenuComponent() {
           <MenuItem
             icon={
               <img
-                style={{ color: "#fff" }}
+                style={{ color: "red", fill: "red" }}
                 src={homeIcon}
                 alt="home icon"
                 className="active"
+                color="#123456"
+                onLoad="SVGInject(this)"
               />
             }
+            active={pathname === "/dashboard"}
             title="HOME"
           >
             HOME
@@ -84,6 +88,7 @@ function MenuComponent() {
           <MenuItem
             title="Korisnici"
             icon={<img src={usersIcon} alt="people icon" />}
+            active={pathname === "/admin/korisnici"}
           >
             Korisnici
             <Link to="/admin/korisnici" />
@@ -91,6 +96,7 @@ function MenuComponent() {
           <MenuItem
             title="Knjige"
             icon={<img src={bookIcon} alt="book icon" />}
+            active={pathname === "/admin/knjige"}
           >
             Knjige
             <Link to="/admin/knjige" />
@@ -98,6 +104,7 @@ function MenuComponent() {
           <MenuItem
             title="Zadužbe"
             icon={<img src={bookIcon} alt="book icon" />}
+            active={pathname === "/admin/zaduzbe"}
           >
             Zadužbe
             <Link to="/admin/zaduzbe" />
@@ -106,6 +113,7 @@ function MenuComponent() {
             <MenuItem
               title="Zaposlenici"
               icon={<img src={person} alt="person icon" />}
+              active={pathname === "/admin/zaposlenici"}
             >
               Zaposlenici
               <Link to="/admin/zaposlenici" />
@@ -114,6 +122,7 @@ function MenuComponent() {
           <MenuItem
             title="Žanrovi"
             icon={<img src={kategorijaIcon} alt="category icon" />}
+            active={pathname === "/admin/zanrovi"}
           >
             Žanrovi
             <Link to="/admin/zanrovi" />
@@ -121,6 +130,7 @@ function MenuComponent() {
           <MenuItem
             title="Autori"
             icon={<img src={person} alt="person icon" />}
+            active={pathname === "/admin/autori"}
           >
             Autori
             <Link to="/admin/autori" />
@@ -128,6 +138,7 @@ function MenuComponent() {
           <MenuItem
             title="Izdavači"
             icon={<img src={person} alt="person icon" />}
+            active={pathname === "/admin/izdavaci"}
           >
             Izdavači
             <Link to="/admin/izdavaci" />
@@ -135,6 +146,7 @@ function MenuComponent() {
           <MenuItem
             title="Jezici"
             icon={<img src={langIcon} alt="person icon" />}
+            active={pathname === "/admin/jezici"}
           >
             Jezici
             <Link to="/admin/jezici" />
@@ -147,6 +159,7 @@ function MenuComponent() {
               borderTop: "1px solid #494C61",
             }}
             icon={<img src={postavke} alt="home icon" />}
+            active={pathname === "/admin/postavke"}
             className="mt-0"
           >
             Postavke

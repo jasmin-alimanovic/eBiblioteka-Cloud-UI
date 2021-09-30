@@ -52,9 +52,6 @@ function Login() {
             </div>
           </Card.Body>
         </Card>
-        <div className="w-100 text-center mt-2">
-          Don't have account? <Link to="/signup">Sign up</Link>
-        </div>
       </div>
     </Container>
   );

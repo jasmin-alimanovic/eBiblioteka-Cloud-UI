@@ -226,3 +226,54 @@ tfoot td {
 .pro-sidebar-content::-webkit-scrollbar-thumb:hover {
   background: rgba(165, 171, 230);
 }
+
+.icon-hide {
+  opacity: 0;
+  transition: all 350ms ease-in-out;
+}
+.icon-show {
+  opacity: 1;
+  transition: all 350ms ease-in-out;
+}
+
+.pass-hide {
+  display: none !important;
+  /* transition: all 350ms ease-in-out; */
+}
+.pass-show {
+  display: flex !important;
+  transition: all 350ms ease-in-out;
+}
+
+.pass-animate {
+  display: flex;
+  animation: append-animate 0.5s linear;
+}
+.pass-remove-animate {
+  animation: remove-animate 0.5s linear;
+}
+@keyframes append-animate {
+  from {
+    transform: translateY(-150px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0px);
+    opacity: 1;
+  }
+}
+
+@keyframes remove-animate {
+  from {
+    transform: translateY(0px);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(-150px);
+    opacity: 0;
+  }
+}
+#svg {
+  fill: red;
+  stroke: yellow;
+}

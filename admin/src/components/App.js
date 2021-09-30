@@ -18,6 +18,8 @@ import Home from "./Home";
 import UserLogin from "./UserLogin";
 import PrivateUserRoute from "./PrivateUserRoute";
 import Knjige from "./user/Knjige";
+import Postavke from "./Postavke";
+import ForgotPassword from "./ForgotPassword";
 
 function App() {
   return (
@@ -29,6 +31,7 @@ function App() {
             <Route path="/signup" exact component={Signup} />
             <Route path="/403" exact component={Error403} />
             <Route path="/" exact component={Home} />
+            <Route path="/forgot-password" component={ForgotPassword} />
             <PrivateRoute path="/dashboard" exact component={Dashboard} />
             <PrivateRoute path="/admin/knjige" component={Books} />
             <PrivateRoute path="/admin/korisnici" component={Users} />
@@ -38,6 +41,7 @@ function App() {
             <PrivateRoute path="/admin/izdavaci" component={Izdavaci} />
             <PrivateRoute path="/admin/zanrovi" component={Zanrovi} />
             <PrivateRoute path="/admin/jezici" component={Jezici} />
+            <PrivateRoute path="/admin/postavke" component={Postavke} />
             <Route path="/login">
               <UserLogin />
             </Route>

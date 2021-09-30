@@ -33,13 +33,14 @@ export default function AuthProvider({ children }) {
   }
 
   function updatePassword(password) {
-    return currentUser.updatePassword(password);
+    var user = auth.currentUser;
+    return user.updatePassword(password);
   }
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
+      console.log("user", user);
       if (user) {
-        console.log(user);
         getZaposlenikByFID(user.uid)
           .then((data) => {
             if (data) setCurrentUser({ ...user, ...data });
