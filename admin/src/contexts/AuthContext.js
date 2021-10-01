@@ -39,7 +39,6 @@ export default function AuthProvider({ children }) {
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
-      console.log("user", user);
       if (user) {
         getZaposlenikByFID(user.uid)
           .then((data) => {

@@ -41,10 +41,10 @@ export default function Books() {
   }
 
   function HiglightTExt(text, highlight) {
-    const parts = text.split(new RegExp(`(${highlight})`, "gi"));
+    const parts = text?.split(new RegExp(`(${highlight})`, "gi"));
     return (
       <span>
-        {parts.map((part) =>
+        {parts?.map((part) =>
           part.toLowerCase() === highlight.toLowerCase() ? (
             <b key={Math.random() * 500}>{part}</b>
           ) : (
@@ -60,8 +60,9 @@ export default function Books() {
   useEffect(() => {
     getbooks(sort, query, page, pageSize).then((data) => {
       setBooks(data);
+      console.log("books", data);
     });
-  }, [page, pageSize, query, sort, addedBook]);
+  }, [page, pageSize, query, sort, addedBook, izdajKnjigu]);
   // The forwardRef is important!!
   // Dropdown needs access to the DOM node in order to position the Menu
   const CustomToggle = React.forwardRef(({ children, onClick, dots }, ref) => (

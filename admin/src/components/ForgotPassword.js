@@ -13,7 +13,6 @@ export default function ForgotPassword() {
   async function sendResetLink(e) {
     setError(null);
     e.preventDefault();
-    console.log(email);
     try {
       await resetPassword(email);
       setEmail("");

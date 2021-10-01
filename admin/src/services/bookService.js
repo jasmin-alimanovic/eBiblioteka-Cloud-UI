@@ -17,7 +17,11 @@ export async function getbooks(sort, q, page_index, page_size) {
   });
   return res.data;
 }
-
+export async function getbookbyid(id) {
+  // const url = `${booksURL}?sort=${sort}&q=${q}&page_index=${index}&page_size=${size}`;
+  const res = await axios.get(`${booksURL}/${id}`);
+  return res.data;
+}
 export async function addBook(Book) {
   return axios({
     method: "post",

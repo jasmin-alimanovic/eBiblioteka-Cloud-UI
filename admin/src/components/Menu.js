@@ -76,7 +76,6 @@ function MenuComponent() {
                 alt="home icon"
                 className="active"
                 color="#123456"
-                onLoad="SVGInject(this)"
               />
             }
             active={pathname === "/dashboard"}

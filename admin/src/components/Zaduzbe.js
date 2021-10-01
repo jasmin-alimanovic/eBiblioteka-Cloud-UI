@@ -25,6 +25,7 @@ export default function Zaduzbe() {
   const [page, setPage] = useState(1);
   const [query, setQuery] = useState("");
   const [sort, setSort] = useState("id_desc");
+  const [isUpdated, setIsUpdated] = useState(false);
 
   const searchRef = useRef("");
 
@@ -37,7 +38,7 @@ export default function Zaduzbe() {
 
     await updateZaduzba(zaduzba.id, { isZavrsena: true });
     zaduzba.isZavrsena = true;
-    setZaduzbe({ ...zaduzbe, zaduzba });
+    setIsUpdated((state) => !state);
     const _book = {
       ...book,
       dostupno: book.dostupno + 1,
@@ -47,6 +48,9 @@ export default function Zaduzbe() {
       autorId: book.autor.id,
     };
     await updateBook(book.id, _book);
+    getZaduzbe(sort, query, page, pageSize).then((data) => {
+      setZaduzbe(data);
+    });
   }
 
   function detaljiZaduzbe(zaduzba) {
@@ -77,7 +81,7 @@ export default function Zaduzbe() {
     getZaduzbe(sort, query, page, pageSize).then((data) => {
       setZaduzbe(data);
     });
-  }, [page, pageSize, query, sort]);
+  }, [page, pageSize, query, sort, isUpdated]);
   // The forwardRef is important!!
   // Dropdown needs access to the DOM node in order to position the Menu
   const CustomToggle = React.forwardRef(({ children, onClick, dots }, ref) => (
@@ -187,46 +191,47 @@ export default function Zaduzbe() {
                       <span>Najnovije postavljeno</span>
                       <img height="30" width="30" alt="" src={downIcon} />
                     </Dropdown.Item>
-                    <Dropdown.Item
-                      active={activeSort === 2}
-                      onClick={() => {
-                        setActiveSort(2);
-                        setSort("prezime");
-                      }}
-                      eventKey="2"
-                    >
-                      Prezime <img alt="" src={upIcon} />
-                    </Dropdown.Item>
-                    <Dropdown.Item
-                      active={activeSort === 3}
-                      onClick={() => {
-                        setActiveSort(3);
-                        setSort("prezime_desc");
-                      }}
-                      eventKey="2"
-                    >
-                      Prezime <img alt="" src={downIcon} />
-                    </Dropdown.Item>
 
                     <Dropdown.Item
                       active={activeSort === 6}
                       onClick={() => {
                         setActiveSort(6);
-                        setSort("email_desc");
+                        setSort("status_desc");
                       }}
                       eventKey="4"
                     >
-                      Email <img alt="" src={downIcon} />
+                      Status <img alt="" src={downIcon} />
+                    </Dropdown.Item>
+                    <Dropdown.Item
+                      active={activeSort === 3}
+                      onClick={() => {
+                        setActiveSort(3);
+                        setSort("datum_desc");
+                      }}
+                      eventKey="2"
+                    >
+                      Datum zaduživanja <img alt="" src={downIcon} />
+                    </Dropdown.Item>
+
+                    <Dropdown.Item
+                      active={activeSort === 2}
+                      onClick={() => {
+                        setActiveSort(2);
+                        setSort("datum");
+                      }}
+                      eventKey="2"
+                    >
+                      Datum zaduživanja <img alt="" src={upIcon} />
                     </Dropdown.Item>
                     <Dropdown.Item
                       active={activeSort === 7}
                       onClick={() => {
                         setActiveSort(7);
-                        setSort("email");
+                        setSort("status");
                       }}
                       eventKey="5"
                     >
-                      Email <img alt="" src={upIcon} />
+                      Status <img alt="" src={upIcon} />
                     </Dropdown.Item>
                   </Dropdown.Menu>
                 </Dropdown>

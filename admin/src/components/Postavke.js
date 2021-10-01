@@ -28,7 +28,6 @@ export default function Postavke() {
   async function handleEdit(e) {
     e.preventDefault();
     setError(null);
-    console.log("edited");
     const ime = imeRef.current.innerHTML;
     const prezime = prezimeRef.current.innerHTML;
     const telefon = telefonRef.current.innerHTML;
@@ -46,7 +45,6 @@ export default function Postavke() {
     };
     try {
       await updateZaposlenik(currentUser.id, user);
-      console.log("id", currentUser.id);
       setBtnEdit(true);
       Swal.fire(
         "Uspješno uređeno",
@@ -57,7 +55,6 @@ export default function Postavke() {
       console.error(e);
       setError("Popunite sva polja");
     }
-    console.log(user);
   }
 
   //funkcija koja mijenja loziknu trenutnog korisnika
@@ -66,7 +63,6 @@ export default function Postavke() {
     setError(null);
     const pass = passwordRef.current.value;
     const rPass = repeatPasswordRef.current.value;
-    console.log(pass, rPass);
     if (pass === "" || rPass === "") {
       setError("Oba polja moraju biti popunjena");
       return;
@@ -91,7 +87,6 @@ export default function Postavke() {
         setIsAnimate(false);
       }, 500);
     } catch (e) {
-      console.log(e);
       setError("ERROR");
     }
   }

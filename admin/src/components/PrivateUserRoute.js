@@ -4,7 +4,6 @@ import { useAuth } from "../contexts/AuthContext";
 
 export default function PrivateUserRoute({ comp: Component, ...rest }) {
   const { currentUser } = useAuth();
-  console.log("currentUser", currentUser);
   return (
     <Route
       {...rest}

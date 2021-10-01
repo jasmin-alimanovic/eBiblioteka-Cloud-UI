@@ -10,6 +10,8 @@ export default function IzdajBookModal(props) {
   const { book } = props;
   const [users, setUsers] = useState(null);
   const [query, setQuery] = useState("");
+  const [userId, setUserId] = useState();
+  // const [knjiga, setKnjiga] = useState(null);
 
   useEffect(() => {
     getUsers("id_desc", query, 1, 10).then((data) => {
@@ -20,7 +22,8 @@ export default function IzdajBookModal(props) {
   async function handleSubmit(e) {
     e.preventDefault();
     try {
-      let korisnikId = parseInt(userRef.current.value);
+      // let korisnikId = parseInt(userRef.current.value);
+      let korisnikId = parseInt(userId);
       const _book = {
         ...book,
         dostupno: book.dostupno - 1,
@@ -29,6 +32,7 @@ export default function IzdajBookModal(props) {
         jezikId: book.jezik.id,
         autorId: book.autor.id,
       };
+      // setKnjiga({ ...knjiga, dostupno: knjiga.dostupno - 1 });
       delete _book.izdavac;
       delete _book.godinaIzdavanja;
       delete _book.jezik;
@@ -40,15 +44,19 @@ export default function IzdajBookModal(props) {
       await updateBook(book.id, _book);
       let knjigaId = book.id;
       await addZaduzba({ korisnikId, knjigaId });
+      setUserId(null);
+
       Swal.fire(
         "Uspješno zaužena knjiga",
         `Uspješno ste iznajmili knjigu ${book.naziv} korisniku ${user.ime} ${user.prezime}`,
         "success"
       ).then((res) => {
+        setUserId(null);
         if (res.isConfirmed) props.onHide();
       });
     } catch (err) {
       Swal.fire("Error", `Unesite korisnika`, "error").then((res) => res);
+      setUserId(null);
     }
   }
 
@@ -69,8 +77,9 @@ export default function IzdajBookModal(props) {
               <Form.Control
                 placeholder="Pretražite po id-u, imenu, prezimenu..."
                 ref={userRef}
-                onChange={() => {
+                onChange={(e) => {
                   setQuery(userRef.current.value);
+                  setUserId(e.target.value);
                 }}
                 list="users"
               />
