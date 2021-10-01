@@ -21,7 +21,7 @@ function UserLogin() {
         await login(emailRef.current.value, passwordRef.current.value);
       else throw Error("Neispravni podaci");
       setTimeout(() => {
-        history.push("/dashboard");
+        history.push("/knjige");
       }, 1000);
     } catch {
       setError("Neispravni podaci");
