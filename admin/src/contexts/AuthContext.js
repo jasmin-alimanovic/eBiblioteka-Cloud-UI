@@ -2,7 +2,6 @@ import React, { useContext, useState, useEffect } from "react";
 import { auth } from "../firebaseClient";
 import { getZaposlenikByFID } from "../services/zaposlenikService";
 import { getUserByFID } from "../services/userService";
-import userEvent from "@testing-library/user-event";
 
 const AuthContext = React.createContext();
 
