@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, {  useEffect } from "react";
 import { Dropdown, Button } from "react-bootstrap";
 import leftArrow from "../../assets/img/left-arrow.svg";
 import rightArrow from "../../assets/img/right-arrow.svg";
