@@ -40,9 +40,10 @@ export default function Knjige() {
         previous: null,
       });
     });
-  }, [currentUser.firebaseId, currentUser.zaduzbe.length]);
+  }, [currentUser?.firebaseId, currentUser?.zaduzbe?.length]);
 
   useEffect(() => {
+    console.log(currentUser);
     if (zaduzene) {
       getZaduzeneKnjige();
     } else
