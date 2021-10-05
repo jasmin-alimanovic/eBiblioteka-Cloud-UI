@@ -309,7 +309,7 @@ tfoot td {
   -webkit-transition-timing-function: ease-out;
   transition-timing-function: ease-out;
 }
-.card-body {
+.card-body-custom {
   display: -webkit-box;
   -webkit-line-clamp: 8;
   -webkit-box-orient: vertical;

@@ -43,7 +43,6 @@ export default function Knjige() {
   }, [currentUser?.firebaseId, currentUser?.zaduzbe?.length]);
 
   useEffect(() => {
-    console.log(currentUser);
     if (zaduzene) {
       getZaduzeneKnjige();
     } else

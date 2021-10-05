@@ -24,7 +24,7 @@ export default function Book({ book, onClick }) {
           <p className="small">Žanr: {book.kategorija?.naziv}</p>
         </Card.Subtitle>
       </Card.Body>
-      <Card.Body style={{ width: "300px" }} className="small">
+      <Card.Body style={{ width: "300px" }} className="small card-body-custom">
         Opis:{" "}
         <p className="book-opis" style={{ display: "block" }}>
           {" "}
