@@ -5,7 +5,13 @@ const booksURL = `${baseUrl}/books`;
 const addBookURL = `${booksURL}/add-book`;
 const updateBookURL = `${booksURL}/update`;
 
-export async function getbooks(sort, q, page_index, page_size) {
+export async function getbooks(
+  sort,
+  q,
+  page_index,
+  page_size,
+  kategorija = null
+) {
   // const url = `${booksURL}?sort=${sort}&q=${q}&page_index=${index}&page_size=${size}`;
   const res = await axios.get(booksURL, {
     params: {
@@ -13,6 +19,7 @@ export async function getbooks(sort, q, page_index, page_size) {
       q,
       page_index,
       page_size,
+      kategorija,
     },
   });
   return res.data;

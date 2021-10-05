@@ -32,7 +32,6 @@ export default function Books() {
   const [bookForEdit, setBookForEdit] = useState(null);
   const [izdajKnjigu, setIzdajKnjigu] = useState(null);
   const [modalIzdajShow, setModalIzdajShow] = useState(false);
-
   const searchRef = useRef("");
 
   //function that handles submit of search field
@@ -46,7 +45,9 @@ export default function Books() {
       <span>
         {parts?.map((part) =>
           part.toLowerCase() === highlight.toLowerCase() ? (
-            <b key={Math.random() * 500}>{part}</b>
+            <b style={{ color: "yellow" }} key={Math.random() * 500}>
+              {part}
+            </b>
           ) : (
             part
           )
@@ -60,7 +61,6 @@ export default function Books() {
   useEffect(() => {
     getbooks(sort, query, page, pageSize).then((data) => {
       setBooks(data);
-      console.log("books", data);
     });
   }, [page, pageSize, query, sort, addedBook, izdajKnjigu]);
   // The forwardRef is important!!
@@ -156,16 +156,6 @@ export default function Books() {
                       <img height="30" width="30" alt="" src={downIcon} />
                     </Dropdown.Item>
                     <Dropdown.Item
-                      active={activeSort === 2}
-                      onClick={() => {
-                        setActiveSort(2);
-                        setSort("naziv");
-                      }}
-                      eventKey="2"
-                    >
-                      Naziv <img alt="" src={upIcon} />
-                    </Dropdown.Item>
-                    <Dropdown.Item
                       active={activeSort === 3}
                       onClick={() => {
                         setActiveSort(3);
@@ -185,6 +175,16 @@ export default function Books() {
                       eventKey="4"
                     >
                       Godina izdavanja <img alt="" src={downIcon} />
+                    </Dropdown.Item>
+                    <Dropdown.Item
+                      active={activeSort === 2}
+                      onClick={() => {
+                        setActiveSort(2);
+                        setSort("naziv");
+                      }}
+                      eventKey="2"
+                    >
+                      Naziv <img alt="" src={upIcon} />
                     </Dropdown.Item>
                     <Dropdown.Item
                       active={activeSort === 7}

@@ -20,6 +20,7 @@ import PrivateUserRoute from "./PrivateUserRoute";
 import Knjige from "./user/Knjige";
 import Postavke from "./Postavke";
 import ForgotPassword from "./ForgotPassword";
+import UserPostavke from "./user/Postavke";
 
 function App() {
   return (
@@ -46,6 +47,7 @@ function App() {
               <UserLogin />
             </Route>
             <PrivateUserRoute path="/knjige" comp={Knjige} />
+            <PrivateUserRoute path="/profil" comp={UserPostavke} />
           </Switch>
         </AuthProvider>
       </Router>

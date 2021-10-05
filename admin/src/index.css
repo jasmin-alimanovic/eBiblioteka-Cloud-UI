@@ -20,15 +20,16 @@
   box-shadow: 0 1px 2px 0 rgb(60 64 67 / 30%), 0 1px 3px 1px rgb(60 64 67 / 15%);
 }
 html {
-  height: 100%;
   width: 100%;
   background-color: #f6f7f9;
   overflow: scroll;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
 }
 body {
-  height: 100%;
   width: 100%;
   background-color: #f6f7f9;
+  color: #304878 !important;
 }
 #root {
   height: 100%;
@@ -276,4 +277,85 @@ tfoot td {
 #svg {
   fill: red;
   stroke: yellow;
+}
+
+.main-user {
+  width: 960px !important;
+  min-width: 50% !important;
+  border-radius: 15px !important;
+}
+.card-img-custom {
+  background-size: cover;
+  image-rendering: auto;
+  image-rendering: crisp-edges;
+  image-rendering: pixelated;
+  image-resolution: 300dpi snap;
+  max-width: 190px !important;
+}
+.book-card {
+  color: #304878;
+  padding: 1rem !important;
+  height: 220px;
+  width: 100% !important;
+  min-width: 100% !important;
+  width: 100%;
+  margin-bottom: 1rem;
+  border-radius: 15px !important;
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+  -webkit-transition-duration: 0.3s;
+  transition-duration: 0.3s;
+  -webkit-transition-property: transform;
+  transition-property: transform;
+  -webkit-transition-timing-function: ease-out;
+  transition-timing-function: ease-out;
+}
+.card-body {
+  display: -webkit-box;
+  -webkit-line-clamp: 8;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.book-opis {
+  overflow: hidden;
+  box-sizing: inherit;
+  max-height: 144px;
+}
+.book-card:hover {
+  cursor: pointer;
+  -webkit-transform: translateY(-8px);
+  transform: translateY(-8px);
+}
+
+.small {
+  font-size: 12px !important;
+  font-family: Verdana, Calibri, Arial, Helvetica;
+  margin-bottom: 2px;
+}
+
+ul {
+  line-height: 1.5em;
+  margin: 5px 0 15px;
+  padding: 0;
+}
+
+li.arrow {
+  list-style: none;
+  position: relative;
+  padding: 0 0 0 20px;
+}
+
+li.arrow::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 9px;
+  height: 5px;
+  width: 5px;
+  border: 1px solid rgb(48, 72, 120);
+  border-width: 2px 2px 0 0;
+  transform: rotate(45deg);
+}
+
+a {
+  text-decoration: none !important;
 }

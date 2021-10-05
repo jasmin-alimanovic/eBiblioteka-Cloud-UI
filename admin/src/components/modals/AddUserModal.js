@@ -2,6 +2,7 @@ import React, { useRef, useState } from "react";
 import { Alert, Button, Form, Modal } from "react-bootstrap";
 import Swal from "sweetalert2";
 import { addUser, addUserToFirebase } from "../../services/userService";
+import CopyIcon from "../../assets/img/copy.svg";
 
 export default function AddUserModal({ setAddedUser, ...props }) {
   const imeRef = useRef();
@@ -23,6 +24,15 @@ export default function AddUserModal({ setAddedUser, ...props }) {
       telefonRef.current.value !== ""
     );
   }
+
+  function CopyToClipboard(ref) {
+    ref.current.select();
+    ref.current.setSelectionRange(0, 99999);
+    navigator.clipboard.writeText(ref.current.value);
+  }
+  document?.getElementById("copy-img")?.addEventListener("click", () => {
+    CopyToClipboard(passwordRef);
+  });
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -53,7 +63,10 @@ export default function AddUserModal({ setAddedUser, ...props }) {
                 "Uspješno dodano",
                 `Uspješno ste dodali korisnika <strong>
                 ${dbUser.data.ime} ${dbUser.data.prezime}.</strong></br></br>
-                Molimo vas da zapišete lozinku <strong> ${passwordRef.current.value}</strong>`,
+                <span>Molimo vas da zapišete lozinku
+                <strong> ${passwordRef.current.value}</strong>
+                <img title="Kopiraj u međuspremnik" style="cursor:pointer;" id="copy-img" src="${CopyIcon}"" alt="copy icon" />
+                </span>`,
                 "success"
               ).then((res) => {
                 if (res.isConfirmed) props.onHide();
@@ -70,7 +83,7 @@ export default function AddUserModal({ setAddedUser, ...props }) {
   function generatePassword() {
     const letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
     const numbers = "0123456789";
-    const symbols = "!#$&@?*";
+    const symbols = "#$&@";
     let chars = letters + numbers + symbols;
     let password = "";
     for (let i = 0; i < 8; i++) {

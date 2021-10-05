@@ -38,7 +38,7 @@ export default function AuthProvider({ children }) {
   }
 
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((user) => {
+    const unsubscribe = auth.onIdTokenChanged((user) => {
       if (user) {
         getZaposlenikByFID(user.uid)
           .then((data) => {
@@ -48,8 +48,8 @@ export default function AuthProvider({ children }) {
           .catch(() => {
             getUserByFID(user.uid).then((u) => {
               setCurrentUser({ ...userEvent, ...u });
+              setLoading(false);
             });
-            setLoading(false);
           });
       } else {
         setCurrentUser(null);
