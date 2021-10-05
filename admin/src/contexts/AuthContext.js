@@ -47,7 +47,7 @@ export default function AuthProvider({ children }) {
           })
           .catch(() => {
             getUserByFID(user.uid).then((u) => {
-              setCurrentUser({ ...userEvent, ...u });
+              setCurrentUser({ ...user, ...u });
               setLoading(false);
             });
           });
