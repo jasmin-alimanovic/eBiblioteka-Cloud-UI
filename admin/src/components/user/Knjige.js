@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { Container, Image, Card } from "react-bootstrap";
+import { Container, Card } from "react-bootstrap";
 import { useAuth } from "../../contexts/AuthContext";
 import { getbooks } from "../../services/bookService";
 import { getkategorijas } from "../../services/kategorijaService";
@@ -9,10 +9,10 @@ import Book from "./Book";
 import { getUserByFID } from "../../services/userService";
 import CustomHeader from "./CustomHeader";
 import Pagination from "./Pagination";
-import { Link } from "react-router-dom";
 import CloseIcon from "../../assets/img/close.svg";
 import DropdownSort from "./DropdownSort";
 import BookModal from "../modals/BookModal";
+import Kategorije from "./Kategorije";
 
 export default function Knjige() {
   const bookRef = React.forwardRef(() => {});
@@ -97,38 +97,14 @@ export default function Knjige() {
                 setSort={setSort}
               />
               <br />
-              <ul>
-                Žanrovi
-                {kategorije?.map((k) => (
-                  <li key={k.id} className="arrow">
-                    <Link
-                      onClick={(e) => {
-                        e.preventDefault();
-                        setKategorija(k.id);
-                        history.replace("/knjige");
-                        setPage(1);
-                      }}
-                      // className="nav-link"
-                      to={"/knjige#"}
-                    >
-                      {k.naziv}{" "}
-                    </Link>
-                  </li>
-                ))}
-                {kategorija && (
-                  <li
-                    className="nav-link"
-                    style={{ cursor: "pointer" }}
-                    onClick={(e) => {
-                      e.preventDefault();
-                      setKategorija(null);
-                      setPage(1);
-                    }}
-                  >
-                    <Image src={CloseIcon} /> Obriši filter
-                  </li>
-                )}
-              </ul>
+              <Kategorije
+                kategorija={kategorija}
+                kategorije={kategorije}
+                setKategorija={setKategorija}
+                setPage={setPage}
+                history={history}
+                icon={CloseIcon}
+              />
             </div>
             <div className="middle" style={{ width: "80%" }}>
               {books
