@@ -20,9 +20,8 @@ export default function Dashboard() {
   const [chartData, setChartData] = useState(null);
   const [zaduzbaChartData, setZaduzbaChartData] = useState(null);
   const [width, setWidth] = useState(900);
-
+  const { currentUser } = useAuth();
   useEffect(() => {
-    console.log(currentUser.xa);
     function handleResize() {
       if (window.innerWidth <= 1050) {
         setWidth(700);
@@ -57,8 +56,8 @@ export default function Dashboard() {
     });
 
     getZaduzbeCountByDate(7).then((data) => setZaduzbaChartData(data));
-  }, []);
-  const { currentUser } = useAuth();
+  }, [currentUser.xa]);
+
   //   const history = useHistory();
   return (
     <div className="d-flex">
