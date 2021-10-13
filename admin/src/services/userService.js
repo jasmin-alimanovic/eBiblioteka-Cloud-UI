@@ -6,19 +6,22 @@ const addUserURL = `${usersURL}/add-user`;
 const updateUserURL = `${usersURL}/update`;
 const addFirebaseUser = `${usersURL}/add-user-firebase`;
 
-export async function getUsers(sort, q, index, size) {
-  const res = await axios.get(`${usersURL}`, {
+export async function getUsers(sort, q, index, size, token) {
+  const res = await axios({
+    method: "GET",
+    url: usersURL,
     params: {
       sort: sort,
       q: q,
       page_index: index,
       page_size: size,
     },
+    headers: { Authorization: `Bearer ${token}` },
   });
   return res.data;
 }
 
-export async function getNewUsers(sort, q, index, size) {
+export async function getNewUsers(sort, q, index, size, token) {
   const res = await axios.get(`${usersURL}/new-users`, {
     params: {
       sort: sort,
@@ -26,6 +29,7 @@ export async function getNewUsers(sort, q, index, size) {
       page_index: index,
       page_size: size,
     },
+    headers: { Authorization: `Bearer ${token}` },
   });
   return res.data;
 }

@@ -77,7 +77,6 @@ export default function Knjige() {
   return (
     <>
       <Navigation getZaduzeneKnjige={getZaduzeneKnjige} logout={logout} />
-
       <Container className="d-flex flex-column justify-content-center align-items-center">
         <div style={{ height: "170px", minHeight: "170px" }}></div>
         <Card

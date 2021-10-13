@@ -22,6 +22,7 @@ export default function Dashboard() {
   const [width, setWidth] = useState(900);
 
   useEffect(() => {
+    console.log(currentUser.xa);
     function handleResize() {
       if (window.innerWidth <= 1050) {
         setWidth(700);
@@ -39,10 +40,10 @@ export default function Dashboard() {
   }, []);
 
   useEffect(() => {
-    getUsers("", "", 1, 5).then((data) => {
+    getUsers("", "", 1, 5, currentUser.xa).then((data) => {
       setUsers(data);
     });
-    getNewUsers("", "", 1, 5).then((data) => {
+    getNewUsers("", "", 1, 5, currentUser.xa).then((data) => {
       setNewUsers(data);
     });
     getbooks("", "", 1, 5).then((data) => {
