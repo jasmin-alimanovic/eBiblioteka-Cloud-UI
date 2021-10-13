@@ -4,6 +4,7 @@ import { getUsers, getUserById } from "../../services/userService";
 import { addZaduzba } from "../../services/zaduzbaService";
 import { updateBook } from "../../services/bookService";
 import Swal from "sweetalert2";
+import { useAuth } from "../../contexts/AuthContext";
 
 export default function IzdajBookModal(props) {
   const userRef = useRef();
@@ -11,13 +12,14 @@ export default function IzdajBookModal(props) {
   const [users, setUsers] = useState(null);
   const [query, setQuery] = useState("");
   const [userId, setUserId] = useState();
+  const { currentUser } = useAuth();
   // const [knjiga, setKnjiga] = useState(null);
 
   useEffect(() => {
-    getUsers("id_desc", query, 1, 10).then((data) => {
+    getUsers("id_desc", query, 1, 10, currentUser.xa).then((data) => {
       setUsers(data.data);
     });
-  }, [query, book]);
+  }, [query, book, currentUser.xa]);
 
   async function handleSubmit(e) {
     e.preventDefault();

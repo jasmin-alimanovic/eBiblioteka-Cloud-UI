@@ -43,10 +43,10 @@ export default function Users() {
     document.title = "eBiblioteka Cloud-Korisnici";
   }, []);
   useEffect(() => {
-    getUsers(sort, query, page, pageSize).then((data) => {
+    getUsers(sort, query, page, pageSize, currentUser.xa).then((data) => {
       setUsers(data);
     });
-  }, [page, pageSize, query, sort, addedUser]);
+  }, [page, pageSize, query, sort, addedUser, currentUser.xa]);
   // The forwardRef is important!!
   // Dropdown needs access to the DOM node in order to position the Menu
   const CustomToggle = React.forwardRef(({ children, onClick, dots }, ref) => (
