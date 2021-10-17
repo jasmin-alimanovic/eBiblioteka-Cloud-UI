@@ -87,7 +87,9 @@ export default function Postavke() {
         setIsAnimate(false);
       }, 500);
     } catch (e) {
-      setError("ERROR");
+      setError("Promjena lozinke zahtjeva nedavnu prijavu");
+      console.log(e);
+      setLoading(false);
     }
   }
 

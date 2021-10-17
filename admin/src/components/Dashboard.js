@@ -64,7 +64,7 @@ export default function Dashboard() {
       <MenuComponent />
       <div className="push"></div>
       <div id="main" className="w-100">
-        <div className="m-5 d-flex justify-content-between">
+        <div className="mx-5 mb-5 d-flex justify-content-between header">
           <h1>HOME</h1>
           <div className="user-detail">
             <span>

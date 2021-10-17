@@ -34,11 +34,14 @@ export async function getNewUsers(sort, q, index, size, token) {
   return res.data;
 }
 
-export async function addUser(user) {
+export async function addUser(user, token) {
   return axios({
     method: "post",
     url: addUserURL,
-    headers: { "Content-Type": "application/json" },
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    },
     data: user,
   });
 }

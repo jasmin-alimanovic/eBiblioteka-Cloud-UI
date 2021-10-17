@@ -40,7 +40,6 @@ export default function AuthProvider({ children }) {
     const unsubscribe = auth.onIdTokenChanged((user) => {
       if (user) {
         user.getIdToken().then((data) => {
-          console.log("token", data);
           getZaposlenikByFID(user.uid)
             .then((data) => {
               if (data) setCurrentUser({ ...user, ...data, token: data });

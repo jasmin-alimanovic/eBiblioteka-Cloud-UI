@@ -15,7 +15,6 @@ import BookModal from "../modals/BookModal";
 import Kategorije from "./Kategorije";
 
 export default function Knjige() {
-  const bookRef = React.forwardRef(() => {});
   const { currentUser, logout } = useAuth();
   const [books, setBooks] = useState(null);
   const [kategorije, setKategorije] = useState(null);
@@ -78,11 +77,13 @@ export default function Knjige() {
     <>
       <Navigation getZaduzeneKnjige={getZaduzeneKnjige} logout={logout} />
       <Container className="d-flex flex-column justify-content-center align-items-center">
-        <div style={{ height: "170px", minHeight: "170px" }}></div>
+        <div
+          style={{ height: "170px", minHeight: "170px", width: "100wv" }}
+        ></div>
         <Card
           role="main"
           className="main-user p-4"
-          style={{ width: "60%", minHeight: "100%" }}
+          style={{ width: "60%", height: "100%" }}
         >
           <div>
             <div style={{ height: "70px" }}></div>
@@ -133,7 +134,6 @@ export default function Knjige() {
 
       {viewBook && (
         <BookModal
-          ref={bookRef}
           book={viewBook}
           show={showBookModal}
           onHide={() => {

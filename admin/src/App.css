@@ -1,0 +1,37 @@
+html,
+body,
+#root {
+  min-height: 100%;
+  background: url("assets/img/library.jpg") !important;
+  background-position: center;
+  background-repeat: repeat-y;
+  background-size: 40vh;
+}
+
+.buttons {
+  background: transparent !important;
+}
+/* url("assets/img/library.jpg") !important */
+.custom-btn1 {
+  height: 60px !important;
+  display: flex !important;
+  align-items: center;
+  text-align: end;
+  justify-content: center;
+  width: 120px !important;
+  box-shadow: 2px -2px 10px #062046, -2px 2px 10px #062046;
+}
+.custom-btn2 {
+  height: 60px !important;
+  display: flex !important;
+  align-items: center;
+  text-align: end;
+  justify-content: center;
+  width: 120px !important;
+  box-shadow: 2px -2px 10px #323435, -2px 2px 10px #323435;
+}
+main#main > section,
+.header {
+  margin-top: 5rem !important;
+  color: #c3d7ec !important;
+}
